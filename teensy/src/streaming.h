@@ -31,7 +31,7 @@ private:
             return;
 
         // Only handle data frames (? Maybe I should allow data and command frames, later)
-        if (SERIAL.read() != tpm2DataFrame)
+        if (SERIAL.read() != tpm2Command)
             return;
 
 
