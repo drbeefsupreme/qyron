@@ -7,6 +7,7 @@ Too Late Show conspiracy board.
 #include <SmartLEDShieldV4.h> //shield firmware
 #include <SmartMatrix3.h> //HUB75 library
 
+
 /*  SmartMatrix initialization, with settings for the chyron */
 
 #define COLOR_DEPTH 24                  // known working: 24, 48 - If the sketch uses type `rgb24` directly, COLOR_DEPTH must be 24
@@ -36,20 +37,12 @@ SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer2, kMatrixWidth, kMatrixHeigh
 //Creates SMLayerIndexed
 SMARTMATRIX_ALLOCATE_INDEXED_LAYER(indexedLayer, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kIndexedLayerOptions);
 
-/*  TPM packet constants */
-
-#define tpm2Header 0xc9
-#define tpm2netHeader 0x9c
-#define tpm2DataFrame 0xda
-#define tpm2Command 0xc0
-#define tpm2Answer 0xaa
-#define tpm2Footer 0x36
-#define tpm2Acknowledge 0xac
-
-
 // Ports
 #define SERIAL Serial //Serial port for communication
 #define SERIAL_DEBUG Serial //Serial port for debugging
+
+//My libraries
+#include "streaming.h"
 
 void setup() {
   delay(1000);

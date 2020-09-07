@@ -1,6 +1,17 @@
 #ifndef __STREAMING_H_
 #define __STREAMING_H_
 
+/*  TPM packet constants */
+
+#define tpm2Header 0xc9
+#define tpm2netHeader 0x9c
+#define tpm2DataFrame 0xda
+#define tpm2Command 0xc0
+#define tpm2Answer 0xaa
+#define tpm2Footer 0x36
+#define tpm2Acknowledge 0xac
+
+
 /*
 ** This file contains the code for reading TPM packets and copying them to the chyron. This code
 ** has been largely copied from aurora/StreamingMode.h
@@ -8,7 +19,10 @@
 */
 
 class StreamingMode {
-    void drawFrameTPM() {
+private:
+    uint32_t lastData = 1000;
+
+    void drawFrameTPM2() {
         int bufferSize = matrix.getScreenHeight() * matrix.getScreenWidth() * 3;
         rgb24 *buffer = backgroundLayer.backBuffer(); //defined in SM3/MatrixCommon.h
 
@@ -40,9 +54,43 @@ class StreamingMode {
 
         // If packet is valid, swap buffers and ack
         // TODO: Generalize this to work with other layers
-        backgroundLayer.swapBuffers();
+        backgroundLayer.swapBuffers(); //for some reason it is commented out in aurora, does it update some other way?
         SERIAL.write(tpm2Acknowledge);
-    } 
-}
+    }
+
+public:
+
+        boolean haveReceivedData = false;
+
+        boolean handleStreaming() {
+            boolean receivedData = false;
+
+            // Make sure serial data is waiting
+            if (SERIAL.available() > 0) {
+                if (SERIAL.peek() == tpm2Header) {
+                    drawFrameTPM2();
+                    lastData = millis();
+                    receivedData = true;
+                }
+                else {
+                    // if it is not recognized, throw the byte away
+                    SERIAL.read();
+                }
+            }
+
+            if (receivedData) {
+                haveReceivedData = true;
+                return true;
+            }
+
+            if (haveReceivedData && millis() - lastData < 1000) {
+                return true;
+            }
+
+            haveReceivedData = false;
+            return false;
+        }
+
+};
 
 #endif // __STREAMING_H_
