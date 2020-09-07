@@ -41,55 +41,6 @@ SMARTMATRIX_ALLOCATE_INDEXED_LAYER(indexedLayer, kMatrixWidth, kMatrixHeight, CO
 #define SERIAL Serial //Serial port for communication
 #define SERIAL_DEBUG Serial //Serial port for debugging
 
-//My libraries
-#include "streaming.h"
-
-void setup() {
-  delay(1000);
-  SERIAL.begin(115200);
-
-  //demoSetup();  //initializes the matrix and demo layers
-}
-
-void loop() {
-  /*if ( Serial.available() && (Serial.read() == '1')) {
-    textLayer1();
-  }
-  if ( Serial.available() && (Serial.read() == '2')) {
-    textLayer2();
-  }*/
-}
-
-
-void demoSetup() {
-  matrix.addLayer(&scrollingLayer1);
-  matrix.addLayer(&scrollingLayer2);
-  matrix.begin();
-
-  scrollingLayer1.setMode(wrapForward);
-  scrollingLayer2.setMode(bounceForward);
-
-  scrollingLayer1.setColor({0xff, 0xff, 0xff});
-  scrollingLayer2.setColor({0xff, 0x00, 0xff});
-
-  scrollingLayer1.setSpeed(10);
-  scrollingLayer2.setSpeed(20);
-
-  scrollingLayer1.setFont(gohufont11b);
-  scrollingLayer2.setFont(gohufont11);
-
-
-  scrollingLayer1.setOffsetFromTop((kMatrixHeight/2) - 5);
-  scrollingLayer2.setOffsetFromTop((kMatrixHeight/4) - 5);
-}
-
-void textLayer1() {
-  scrollingLayer1.start("LAYER 1", -1);
-}
-
-void textLayer2() {
-  scrollingLayer2.start("LAYER 2", -1);
-}
 
 //comment this line out to disable debugging
 
@@ -119,3 +70,70 @@ int freeRam()
 #else
 #  define debug( ... )
 #endif
+
+
+//My libraries
+#include "streaming.h"
+StreamingMode streamingMode;
+
+// constants
+const int defaultBrightness = (100*255)/100;
+const rgb24 defaultBackgroundColor = {0x40, 0, 0};
+
+void setup() {
+  delay(1000);
+  SERIAL.begin(115200);
+
+  delay(250);
+  debug("Setup() starting");
+  demoSetup();  //initializes the matrix and demo layers
+
+
+
+  debug("entering loop...");
+}
+
+void loop() {
+
+  //boolean streaming = streamingMode.handleStreaming();
+  streamingMode.drawFrame();
+  //
+  //backgroundLayer.fillScreen(defaultBackgroundColor);
+}
+
+
+void demoSetup() {
+  matrix.addLayer(&backgroundLayer);
+  matrix.addLayer(&scrollingLayer1);
+  matrix.addLayer(&scrollingLayer2);
+  matrix.addLayer(&indexedLayer);
+  matrix.begin();
+
+  matrix.setBrightness(defaultBrightness);
+
+  backgroundLayer.enableColorCorrection(true); //wat this?
+
+  scrollingLayer1.setMode(wrapForward);
+  scrollingLayer2.setMode(bounceForward);
+
+  scrollingLayer1.setColor({0xff, 0xff, 0xff});
+  scrollingLayer2.setColor({0xff, 0x00, 0xff});
+
+  scrollingLayer1.setSpeed(10);
+  scrollingLayer2.setSpeed(20);
+
+  scrollingLayer1.setFont(gohufont11b);
+  scrollingLayer2.setFont(gohufont11);
+
+
+  scrollingLayer1.setOffsetFromTop((kMatrixHeight/2) - 5);
+  scrollingLayer2.setOffsetFromTop((kMatrixHeight/4) - 5);
+}
+
+void textLayer1() {
+  scrollingLayer1.start("LAYER 1", -1);
+}
+
+void textLayer2() {
+  scrollingLayer2.start("LAYER 2", -1);
+}

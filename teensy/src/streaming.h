@@ -102,9 +102,15 @@ public:
         } else if (millis() - lastData > 1000) {
             //If it's been longer than a second since we last received data
             //blank the screen and notify that we're waiting for data
-            backgroundLayer.fillScreen({0, 0, 0});
-            backgroundLayer.setFont(font3x5);
-            backgroundLayer.drawString(3, 24, {255, 255, 255}, "Waiting");
+            debug("waiting...");
+            backgroundLayer.fillScreen({0x40, 0, 0});
+            backgroundLayer.swapBuffers();
+            //backgroundLayer.setFont(font3x5);
+            //backgroundLayer.drawString(3, 24, {255, 255, 255}, "Waiting");
+            //
+
+            scrollingLayer1.start("Waiting...", 1);
+
         }
         return 10;
     }
