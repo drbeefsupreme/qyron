@@ -60,37 +60,57 @@ private:
 
 public:
 
-        boolean haveReceivedData = false;
+    boolean haveReceivedData = false;
 
-        boolean handleStreaming() {
-            boolean receivedData = false;
+    boolean handleStreaming() {
+        boolean receivedData = false;
 
-            // Make sure serial data is waiting
-            if (SERIAL.available() > 0) {
-                if (SERIAL.peek() == tpm2Header) {
-                    drawFrameTPM2();
-                    lastData = millis();
-                    receivedData = true;
-                }
-                else {
-                    // if it is not recognized, throw the byte away
-                    SERIAL.read();
-                }
+        // Make sure serial data is waiting
+        if (SERIAL.available() > 0) {
+            if (SERIAL.peek() == tpm2Header) {
+                drawFrameTPM2();
+                lastData = millis();
+                receivedData = true;
             }
-
-            if (receivedData) {
-                haveReceivedData = true;
-                return true;
+            else {
+                // if it is not recognized, throw the byte away
+                SERIAL.read();
             }
-
-            if (haveReceivedData && millis() - lastData < 1000) {
-                return true;
-            }
-
-            haveReceivedData = false;
-            return false;
         }
 
+        if (receivedData) {
+            haveReceivedData = true;
+            return true;
+        }
+
+        if (haveReceivedData && millis() - lastData < 1000) {
+            return true;
+        }
+
+        haveReceivedData = false;
+        return false;
+    }
+
+    unsigned int drawFrame() {
+        //Make sure serial data is available
+        if (SERIAL.available() > 0) {
+            if (SERIAL.peek() == tpm2Header) {
+                drawFrameTPM2();
+                //Record when last data came in
+                lastData = millis();
+            }
+        } else if (millis() - lastData > 1000) {
+            //If it's been longer than a second since we last received data
+            //blank the screen and notify that we're waiting for data
+            backgroundLayer.fillScreen({0, 0, 0});
+            backgroundLayer.setFont(font3x5);
+            backgroundLayer.drawString(3, 24, {255, 255, 255}, "Waiting");
+        }
+        return 10;
+    }
+
 };
+
+
 
 #endif // __STREAMING_H_
