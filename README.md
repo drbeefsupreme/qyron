@@ -1,7 +1,7 @@
 # qyron
 
-This is software for the Raspberry Pi and Teensy 3.6 used for making SmartMatrix
-API calls via TPM2 connected via USB serial.
+This is software for the Raspberry Pi and Teensy 3.6 w/ SmartMatrix LED Shield
+v3 used for making SmartMatrix API calls via TPM2 connected via USB serial.
 
 ## Install instructions
 
