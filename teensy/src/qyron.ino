@@ -75,6 +75,9 @@ int freeRam()
 //My libraries
 #include "streaming.h"
 StreamingMode streamingMode;
+/*
+** Later I should consider abstracting the device as a class, like LedDeviceTpm2 in hyperion.
+*/
 
 // constants
 const int defaultBrightness = (100*255)/100;
@@ -95,8 +98,8 @@ void setup() {
 
 void loop() {
 
-  //boolean streaming = streamingMode.handleStreaming();
-  streamingMode.drawFrame();
+  boolean streaming = streamingMode.handleStreaming();
+  //streamingMode.drawFrame();
   //
   //backgroundLayer.fillScreen(defaultBackgroundColor);
 }
