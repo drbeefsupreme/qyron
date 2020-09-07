@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 #reads serial messages
-import serial
+import serial #this is actually the pyserial package, installed globally cuz there didnt seem to be another way
+import time
 
 if __name__ == '__main__':
     ser = serial.Serial('/dev/ttyACM0', 115200, timeout=5)
@@ -11,8 +12,10 @@ if __name__ == '__main__':
     print(ser.is_open)
     print(ser.in_waiting)
 
-    while True:
-        if ser.in_waiting > 0:
-            print("test")
-            line = ser.readline().decode('utf-8').rstrip()
-            print(line)
+    layer1command = b'\xc9\xc0\x00\x01\x01\x36'
+    layer2command = b'\xc9\xc0\x00\x01\x02\x36'
+
+    time.sleep(1)
+    ser.write(layer1command)
+    time.sleep(5)
+    ser.write(layer2command)

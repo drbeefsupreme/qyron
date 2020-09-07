@@ -11,6 +11,10 @@
 #define tpm2Footer 0x36
 #define tpm2Acknowledge 0xac
 
+// Commands
+#define tpm2Layer1 0x01
+#define tpm2Layer2 0x02
+
 
 /*
 ** This file contains the code for reading TPM packets and copying them to the chyron. This code
@@ -24,7 +28,7 @@ private:
 
     void drawFrameTPM2() {
         int bufferSize = matrix.getScreenHeight() * matrix.getScreenWidth() * 3;
-        rgb24 *buffer = backgroundLayer.backBuffer(); //defined in SM3/MatrixCommon.h
+        //rgb24 *buffer = backgroundLayer.backBuffer(); //defined in SM3/MatrixCommon.h
 
         // Check header
         if (SERIAL.read() != tpm2Header)
@@ -42,19 +46,28 @@ private:
             return ;
 
         // Copy frame data into buffer
-        int bytesReceived = SERIAL.readBytes((char *) buffer, payloadSize);
+        //int bytesReceived = SERIAL.readBytes((char *) buffer, payloadSize);
+
+        //read the command
+        int command = SERIAL.read();
 
         // Make sure we received what we were promised
-        if (bytesReceived != payloadSize)
-            return;
+        //if (bytesReceived != payloadSize)
+        //return;
 
         // Check footer
-        if (SERIAL.read() != tpm2Footer);
+        if (SERIAL.read() != tpm2Footer)
             return;
 
         // If packet is valid, swap buffers and ack
         // TODO: Generalize this to work with other layers
-        backgroundLayer.swapBuffers(); //for some reason it is commented out in aurora, does it update some other way?
+        //backgroundLayer.swapBuffers(); //for some reason it is commented out in aurora, does it update some other way?
+
+        if (command == tpm2Layer1)
+            scrollingLayer1.start("LAYER 1", 1);
+        else if (command == tpm2Layer2)
+            scrollingLayer2.start("LAYER 2", 1);
+
         SERIAL.write(tpm2Acknowledge);
     }
 
