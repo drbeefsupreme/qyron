@@ -3,7 +3,7 @@ Firmware for the Teensy 3.6 for the Quantum Metachyron project, a part of the
 Too Late Show conspiracy board.
 */
 
-//#include <TPM2.h> //packet protocol
+#include <TPM2.h> //packet protocol
 #include <SmartLEDShieldV4.h> //shield firmware
 #include <SmartMatrix3.h> //HUB75 library
 
@@ -28,45 +28,7 @@ void setup() {
   delay(1000);
   Serial.begin(9600);
 
-  matrix.addLayer(&scrollingLayer1);
-  matrix.addLayer(&scrollingLayer2);
-  matrix.addLayer(&scrollingLayer3);
-  matrix.addLayer(&scrollingLayer4);
-  matrix.addLayer(&scrollingLayer5);
-  matrix.begin();
-
-  scrollingLayer1.setMode(wrapForward);
-  scrollingLayer2.setMode(bounceForward);
-  scrollingLayer3.setMode(bounceReverse);
-  scrollingLayer4.setMode(wrapForward);
-  scrollingLayer5.setMode(bounceForward);
-
-  scrollingLayer1.setColor({0xff, 0xff, 0xff});
-  scrollingLayer2.setColor({0xff, 0x00, 0xff});
-  scrollingLayer3.setColor({0xff, 0xff, 0x00});
-  scrollingLayer4.setColor({0x00, 0x00, 0xff});
-  scrollingLayer5.setColor({0xff, 0x00, 0x00});
-
-  scrollingLayer1.setSpeed(10);
-  scrollingLayer2.setSpeed(20);
-  scrollingLayer3.setSpeed(40);
-  scrollingLayer4.setSpeed(80);
-  scrollingLayer5.setSpeed(120);
-
-  scrollingLayer1.setFont(gohufont11b);
-  scrollingLayer2.setFont(gohufont11);
-  scrollingLayer3.setFont(font8x13);
-  scrollingLayer4.setFont(font6x10);
-  scrollingLayer5.setFont(font5x7);
-
-  scrollingLayer4.setRotation(rotation270);
-  scrollingLayer5.setRotation(rotation90);
-
-  scrollingLayer1.setOffsetFromTop((kMatrixHeight/2) - 5);
-  scrollingLayer2.setOffsetFromTop((kMatrixHeight/4) - 5);
-  scrollingLayer3.setOffsetFromTop((kMatrixHeight/2 + kMatrixHeight/4) - 5);
-  scrollingLayer4.setOffsetFromTop((kMatrixWidth/2 + kMatrixWidth/4) - 5);
-  scrollingLayer5.setOffsetFromTop((kMatrixWidth/2 + kMatrixWidth/4) - 5);
+  demoSetup();  //initializes the matrix and demo layers
 }
 
 void loop() {
@@ -76,6 +38,28 @@ void loop() {
   if ( Serial.available() && (Serial.read() == '2')) {
     textLayer2();
   }
+}
+
+void demoSetup() {
+  matrix.addLayer(&scrollingLayer1);
+  matrix.addLayer(&scrollingLayer2);
+  matrix.begin();
+
+  scrollingLayer1.setMode(wrapForward);
+  scrollingLayer2.setMode(bounceForward);
+
+  scrollingLayer1.setColor({0xff, 0xff, 0xff});
+  scrollingLayer2.setColor({0xff, 0x00, 0xff});
+
+  scrollingLayer1.setSpeed(10);
+  scrollingLayer2.setSpeed(20);
+
+  scrollingLayer1.setFont(gohufont11b);
+  scrollingLayer2.setFont(gohufont11);
+
+
+  scrollingLayer1.setOffsetFromTop((kMatrixHeight/2) - 5);
+  scrollingLayer2.setOffsetFromTop((kMatrixHeight/4) - 5);
 }
 
 void textLayer1() {
