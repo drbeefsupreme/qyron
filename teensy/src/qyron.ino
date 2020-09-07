@@ -18,7 +18,12 @@ const uint8_t kPanelType = SMARTMATRIX_HUB75_16ROW_MOD8SCAN; // use SMARTMATRIX_
 const uint8_t kMatrixOptions = (SMARTMATRIX_OPTIONS_NONE);      // see http://docs.pixelmatix.com/SmartMatrix for options
 const uint8_t kScrollingLayerOptions = (SM_SCROLLING_OPTIONS_NONE);
 
+/*
+//Initiates THE MATRIX
+//Creates a SmartMatrix3 object named matrix with the following attributes via macro
+*/
 SMARTMATRIX_ALLOCATE_BUFFERS(matrix, kMatrixWidth, kMatrixHeight, kRefreshDepth, kDmaBufferRows, kPanelType, kMatrixOptions);
+
 SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer1, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
 SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer2, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
 
@@ -32,9 +37,14 @@ SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer2, kMatrixWidth, kMatrixHeigh
 #define tpm2Footer 0x36
 #define tpm2Acknowledge 0xac
 
+
+// Ports
+#define SERIAL Serial //Serial port for communication
+#define SERIAL_DEBUG Serial //Serial port for debugging
+
 void setup() {
   delay(1000);
-  Serial.begin(115200);
+  SERIAL.begin(115200);
 
   //demoSetup();  //initializes the matrix and demo layers
 }
@@ -47,6 +57,7 @@ void loop() {
     textLayer2();
   }*/
 }
+
 
 void demoSetup() {
   matrix.addLayer(&scrollingLayer1);
@@ -77,3 +88,32 @@ void textLayer1() {
 void textLayer2() {
   scrollingLayer2.start("LAYER 2", -1);
 }
+
+//comment this line out to disable debugging
+
+#define DEBUG
+
+#ifdef DEBUG
+
+void debug(const char* str)
+{
+  SERIAL_DEBUG.println(str);
+}
+
+void debug(const char* str, uint16_t val, int fmt = DEC)
+{
+  SERIAL_DEBUG.print(str);
+  SERIAL_DEBUG.println(val, fmt);
+}
+
+//finds amount of RAM still free (untested)
+int freeRam()
+{
+   extern int __heap_start, *__brkval;
+   int v;
+   return (int) &v - (__brkval == 0 ? (int) &__heap_start : (int) __brkval);
+}
+
+#else
+#  define debug( ... )
+#endif
