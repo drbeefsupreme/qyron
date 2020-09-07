@@ -7,6 +7,7 @@ Too Late Show conspiracy board.
 #include <SmartLEDShieldV4.h> //shield firmware
 #include <SmartMatrix3.h> //HUB75 library
 
+/*  SmartMatrix initialization, with settings for the chyron */
 
 #define COLOR_DEPTH 24                  // known working: 24, 48 - If the sketch uses type `rgb24` directly, COLOR_DEPTH must be 24
 const uint8_t kMatrixWidth = 128;        // known working: 32, 64, 96, 128
@@ -20,24 +21,31 @@ const uint8_t kScrollingLayerOptions = (SM_SCROLLING_OPTIONS_NONE);
 SMARTMATRIX_ALLOCATE_BUFFERS(matrix, kMatrixWidth, kMatrixHeight, kRefreshDepth, kDmaBufferRows, kPanelType, kMatrixOptions);
 SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer1, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
 SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer2, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
-SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer3, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
-SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer4, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
-SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer5, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
+
+/*  TPM packet constants */
+
+#define tpm2Header 0xc9
+#define tpm2netHeader 0x9c
+#define tpm2DataFrame 0xda
+#define tpm2Command 0xc0
+#define tpm2Answer 0xaa
+#define tpm2Footer 0x36
+#define tpm2Acknowledge 0xac
 
 void setup() {
   delay(1000);
   Serial.begin(115200);
 
-  demoSetup();  //initializes the matrix and demo layers
+  //demoSetup();  //initializes the matrix and demo layers
 }
 
 void loop() {
-  if ( Serial.available() && (Serial.read() == '1')) {
+  /*if ( Serial.available() && (Serial.read() == '1')) {
     textLayer1();
   }
   if ( Serial.available() && (Serial.read() == '2')) {
     textLayer2();
-  }
+  }*/
 }
 
 void demoSetup() {
