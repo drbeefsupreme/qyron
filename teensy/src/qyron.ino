@@ -26,7 +26,7 @@ SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer5, kMatrixWidth, kMatrixHeigh
 
 void setup() {
   delay(1000);
-  Serial.begin(9600);
+  Serial.begin(115200);
 
   demoSetup();  //initializes the matrix and demo layers
 }
