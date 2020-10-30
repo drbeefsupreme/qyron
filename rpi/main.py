@@ -1,6 +1,11 @@
 #!/usr/bin/env python3
 
 #reads serial messages
+#
+# TODO make template for TPM2 messages
+# TODO make this into a REPL
+#
+#
 import serial #this is actually the pyserial package, installed globally cuz there didnt seem to be another way
 import time
 
@@ -12,7 +17,7 @@ if __name__ == '__main__':
     print(ser.is_open)
     print(ser.in_waiting)
 
-    layer1command = b'\xc9\xc0\x00\x01\x01\x36'
+    layer1command = b'\xc9\xc0\x00\x01\x01\x36' #the b is for "bytes literal"
     layer2command = b'\xc9\xc0\x00\x01\x02\x36'
 
     time.sleep(1)
