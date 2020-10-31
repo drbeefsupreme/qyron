@@ -18,6 +18,8 @@
 #define tpm2EndText 0xaa
 
 
+//#include <Arduino.h>
+
 /*
 ** This file contains the code for reading TPM packets and copying them to the chyron. This code
 ** has been largely copied from aurora/StreamingMode.h
@@ -61,8 +63,9 @@ private:
         else if (command == tpm2Layer2)
             scrollingLayer2.start("PACKET 2", -1);
         else if (command == tpm2BeginText)
-            inputText = SERIAL.readString();
-            scrollingLayer1.start(inputText.c_str(), -1);
+            SERIAL.readStringUntil('"'); //throws away first quote mark
+            String stringRead = SERIAL.readStringUntil('"');
+            scrollingLayer1.start(stringRead.c_str(), -1);
 
 
         // Make sure we received what we were promised
