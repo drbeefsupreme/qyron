@@ -20,6 +20,8 @@ class CommandFormatter:
                   text.encode(),  #encodes string as raw bytes
                   tpm2Footer))
 
+        print(command)
+
     @staticmethod
     def test_layer_1():
         # debugging
