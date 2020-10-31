@@ -44,9 +44,10 @@ if __name__ == '__main__':
     print(conn.in_waiting)
 
     time.sleep(3)
-    controller.test_layer_1()
-    time.sleep(3)
-    controller.test_layer_1()
+    bweh = '\"bweh skrrt\"'
+    controller.display_text(bweh)
+    time.sleep(5)
+    # controller.test_layer_1()
 
 """
 if __name__ == '__main__':
