@@ -16,7 +16,6 @@ class CommandFormatter:
 
         command = b"".join((tpm2Header,
                   tpm2Command,
-                  tpm2BeginText,
                   b'\x00',
                   b'\x03',
                   text.encode(),  #encodes string as raw bytes
