@@ -1,9 +1,11 @@
 """
 Representation of the serial connection and reading/writing to it
 """
-from .HelperFunctions import print_verbose
+from helperFunctions import print_verbose
+#import HelperFunctions
 
 import serial
+import time
 
 class Connector:
     def __init__(self, serial_port='/dev/ttyACM0', baud_rate=115200, read_timeout=5, verbose=True):
@@ -21,7 +23,9 @@ class Connector:
     def connect_to_serial_port(self):  #-> Boolean?
         # connects to a serial port
 
-        print_verbose('Connecting to port [' + self.serial_port + ']...', end='')
+        print_verbose('Connecting to port [' + self.serial_port + ']...')
+
+        time.sleep(3)
 
         try:
             self.conn = serial.Serial(self.serial_port, self.baud_rate)

@@ -2,8 +2,8 @@
 Creates a virtual representation of the Arduino and possible API calls to SmartMatrix
 """
 
-from .HelperFunctions import print_verbose
-from .CommandFormatter import CommandFormatter
+from helperFunctions import print_verbose
+from commandFormatter import CommandFormatter
 
 class Controller:
     def __init__(self, conn=None, verbose=False):
@@ -15,7 +15,7 @@ class Controller:
         # Sets the serial connection for the Controller
         self.conn = conn
 
-    def display_text(self, text)
+    def display_text(self, text):
         # Displays input text
 
         print_verbose('display_text: ' + text)
@@ -30,7 +30,7 @@ class Controller:
             print('\t[-]', e)
             return False
 
-    def clear_text(self)
+    def clear_text(self):
         #clears the screen of text
 
         print_verbose('clear_text')
