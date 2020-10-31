@@ -4,6 +4,8 @@ Creates a virtual representation of the Arduino and possible API calls to SmartM
 
 from HelperFunctions import print_verbose
 
+import CommandFormatter
+
 class Controller:
     def __init__(self, conn=None, verbose=False):
         self.conn = conn
@@ -20,8 +22,8 @@ class Controller:
         print_verbose('display_text: ' + text)
 
         try:
-            # command = CommandFormatter.display_text_command(text)
-            # self.conn.write(command.encode())
+            command = CommandFormatter.display_text_command(text)
+            self.conn.write(command)
             print_verbose('command sent')
             self.state = []
             return True
