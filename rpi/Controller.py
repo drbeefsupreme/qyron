@@ -2,9 +2,8 @@
 Creates a virtual representation of the Arduino and possible API calls to SmartMatrix
 """
 
-from HelperFunctions import print_verbose
-
-import CommandFormatter
+from .HelperFunctions import print_verbose
+from .CommandFormatter import CommandFormatter
 
 class Controller:
     def __init__(self, conn=None, verbose=False):

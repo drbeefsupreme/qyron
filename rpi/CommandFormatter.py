@@ -2,7 +2,7 @@
 Formats commands into strings to be written to the serial port
 """
 
-from Constants import *
+from .Constants import *
 
 class CommandFormatter:
     @staticmethod

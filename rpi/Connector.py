@@ -1,7 +1,7 @@
 """
 Representation of the serial connection and reading/writing to it
 """
-from HelperFunctions import print_verbose
+from .HelperFunctions import print_verbose
 
 import serial
 

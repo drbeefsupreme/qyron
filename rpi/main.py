@@ -4,6 +4,11 @@
 import serial #this is actually the pyserial package, installed globally cuz there didnt seem to be another way
 import time
 
+#other project files
+from .Connector import Connector
+from .Controller import Controller
+from .HelperFunctions import HelperFunctions
+
 #REPL
 from code import InteractiveConsole
 header = "THE QUANTUM METACHYRON"
