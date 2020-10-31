@@ -17,7 +17,7 @@ from helperFunctions import HelperFunctions
 
 VERBOSE = True
 SERIAL_PORT = '/dev/ttyACM0'
-READ_TIMEOUT = 1
+READ_TIMEOUT = 5
 
 if __name__ == '__main__':
     options = {
@@ -38,12 +38,15 @@ if __name__ == '__main__':
 
     controller = Controller(conn=conn, verbose=VERBOSE)
 
-    print("testing...")
+    print("name, open, waiting:")
     print(conn.name)
     print(conn.is_open)
     print(conn.in_waiting)
 
-
+    time.sleep(3)
+    controller.test_layer_1()
+    time.sleep(3)
+    controller.test_layer_1()
 
 """
 if __name__ == '__main__':
@@ -61,10 +64,8 @@ if __name__ == '__main__':
     #stringText = b'hello'
     #stringPacket = stringCommand + stringText
 
-    time.sleep(1)
-    ser.write(stringCommand)
     time.sleep(2)
-    ser.write(b'\x36')
-    time.sleep(3)
-    ser.write(stringCommand)
+    ser.write(layer1command)
+    time.sleep(2)
+    ser.write(layer2command)
 """

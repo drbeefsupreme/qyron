@@ -44,3 +44,21 @@ class Controller:
         except Exception as e:
             print('\t[-]', e)
             return False;
+
+    def test_layer_1(self):
+        # testing
+
+        print_verbose('testing layer 1')
+
+        try:
+            command = CommandFormatter.test_layer_1()
+            print(command)
+            self.conn.write(command)
+            print_verbose('command sent')
+            self.state = []
+            return True
+
+        except Exception as e:
+            print('test layer fail')
+            print('\t[-]', e)
+            return False;
