@@ -61,7 +61,6 @@ private:
         else if (command == tpm2Layer2)
             scrollingLayer2.start("PACKET 2", -1);
         else if (command == tpm2BeginText)
-            debug("BeginText");
             inputText = SERIAL.readString();
             scrollingLayer1.start(inputText.c_str(), -1);
 
@@ -77,6 +76,7 @@ private:
         // If packet is valid, swap buffers and ack
 
         SERIAL.write(tpm2Acknowledge);
+
     }
 
 public:
