@@ -261,5 +261,7 @@ bool DoMyCommand(char* commandLine) {
   }
 }
 
+void readCommand()
+
 
 #endif // __COMMANDLINE_H_
