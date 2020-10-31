@@ -42,6 +42,7 @@ private:
 
 
         int payloadSize = (SERIAL.read() << 8) | SERIAL.read();
+        // I think the left shift << 8 is because its measured in bytes and we want number of bits?
 
         // Don't allow frame to overrun buffer
         if (payloadSize > bufferSize)
