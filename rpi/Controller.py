@@ -2,6 +2,8 @@
 Creates a virtual representation of the Arduino and possible API calls to SmartMatrix
 """
 
+from pyduino.HelperFunctions import print_verbose
+
 class Controller:
     def __init__(self, conn=None, verbose=False):
         self.conn = conn
