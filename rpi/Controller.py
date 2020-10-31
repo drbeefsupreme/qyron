@@ -2,7 +2,7 @@
 Creates a virtual representation of the Arduino and possible API calls to SmartMatrix
 """
 
-from pyduino.HelperFunctions import print_verbose
+from HelperFunctions import print_verbose
 
 class Controller:
     def __init__(self, conn=None, verbose=False):
@@ -20,7 +20,7 @@ class Controller:
         print_verbose('display_text: ' + text)
 
         try:
-            # command = CommandFormatter.displayText(text)
+            # command = CommandFormatter.display_text_command(text)
             # self.conn.write(command.encode())
             print_verbose('command sent')
             self.state = []
