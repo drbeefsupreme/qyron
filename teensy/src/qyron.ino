@@ -74,6 +74,8 @@ int freeRam()
 //My libraries
 #include "streaming.h"
 StreamingMode streamingMode;
+
+#include "Interpreter.h"
 /*
 ** Later I should consider abstracting the device as a class, like LedDeviceTpm2 in hyperion.
 */
