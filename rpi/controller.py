@@ -18,7 +18,7 @@ class Controller:
     def display_text(self, text):
         # Displays input text
 
-        print_verbose('display_text: ' + text)
+        print('display_text: ' + text)
 
         try:
             command = CommandFormatter.display_text_command(text)
