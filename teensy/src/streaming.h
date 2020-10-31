@@ -14,6 +14,8 @@
 // Commands
 #define tpm2Layer1 0x01
 #define tpm2Layer2 0x02
+#define tpm2BeginText 0x03
+#define tpm2EndText 0xaa
 
 
 /*
@@ -51,6 +53,19 @@ private:
         //read the command
         int command = SERIAL.read();
 
+        // TODO: Generalize this to work with other layers
+        //backgroundLayer.swapBuffers(); //for some reason it is commented out in aurora, does it update some other way?
+
+        if (command == tpm2Layer1)
+            scrollingLayer1.start("PACKET 1", -1);
+        else if (command == tpm2Layer2)
+            scrollingLayer2.start("PACKET 2", -1);
+        else if (command == tpm2BeginText)
+            debug("BeginText");
+            inputText = SERIAL.readString();
+            scrollingLayer1.start(inputText.c_str(), -1);
+
+
         // Make sure we received what we were promised
         //if (bytesReceived != payloadSize)
         //return;
@@ -60,13 +75,6 @@ private:
             return;
 
         // If packet is valid, swap buffers and ack
-        // TODO: Generalize this to work with other layers
-        //backgroundLayer.swapBuffers(); //for some reason it is commented out in aurora, does it update some other way?
-
-        if (command == tpm2Layer1)
-            scrollingLayer1.start("LAYER 1", 1);
-        else if (command == tpm2Layer2)
-            scrollingLayer2.start("LAYER 2", 1);
 
         SERIAL.write(tpm2Acknowledge);
     }
@@ -75,8 +83,11 @@ public:
 
     boolean haveReceivedData = false;
 
+    String inputText = "";
+
     boolean handleStreaming() {
         boolean receivedData = false;
+
 
         // Make sure serial data is waiting
         if (SERIAL.available() > 0) {

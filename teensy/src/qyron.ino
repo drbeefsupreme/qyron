@@ -7,7 +7,6 @@ Too Late Show conspiracy board.
 #include <SmartLEDShieldV4.h> //shield firmware
 #include <SmartMatrix3.h> //HUB75 library
 
-
 /*  SmartMatrix initialization, with settings for the chyron */
 
 #define COLOR_DEPTH 24                  // known working: 24, 48 - If the sketch uses type `rgb24` directly, COLOR_DEPTH must be 24
