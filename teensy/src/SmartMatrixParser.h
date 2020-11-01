@@ -18,7 +18,8 @@ private:
 
 public:
 
-    SmartMatrixParser(short numCharsIn = 1024): numChars(numCharsIn) {
+    SmartMatrixParser(short numChars = 1024): numChars(numChars) {
+        // list initialization necesssary for const
 //        this->numChars = numCharsIn;
         char *commandFromPC = (char*)calloc(this->numChars, sizeof(char));
         char *stringFromPC = (char*)calloc(this->numChars, sizeof(char));
@@ -50,6 +51,8 @@ public:
         debug("parseData() inputString:");
         debug(inputString);
         strtokIndx = strtok(inputString, "+"); //get the first part - the command
+        debug("strtokIndx:");
+        debug(strtokIndx);
         debug("after strtok");
         strcpy(this->commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
         debug("strcpy");
