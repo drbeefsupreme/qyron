@@ -21,8 +21,8 @@ public:
     SmartMatrixParser(short numChars = 1024): numChars(numChars) {
         // list initialization necesssary for const
 //        this->numChars = numCharsIn;
-        char *commandFromPC = (char*)calloc(this->numChars, sizeof(char));
-        char *stringFromPC = (char*)calloc(this->numChars, sizeof(char));
+        //char *commandFromPC = (char*)calloc(this->numChars, sizeof(char));
+        //char *stringFromPC = (char*)calloc(this->numChars, sizeof(char));
     }
 
     void handleParsedData() {
@@ -54,12 +54,12 @@ public:
         debug("strtokIndx:");
         debug(strtokIndx);
         debug("after strtok");
-        strcpy(this->commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
+        this->commandFromPC = strdup(strtokIndx); // copy the command to the command buffer commandFromPC
         debug("strcpy");
         debug(commandFromPC);
 
         strtokIndx = strtok(NULL, "+"); //continueparsing from where the previous call left off
-        strcpy(this->stringFromPC, strtokIndx);
+        this->stringFromPC = strdup(strtokIndx);
     }
 };
 
