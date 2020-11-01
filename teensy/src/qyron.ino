@@ -90,8 +90,8 @@ void setup() {
   delay(250);
   debug("Setup() starting");
   demoSetup();  //initializes the matrix and demo layers
-  parserSetup();
 
+  streamingMode.setParser(&smParser);
 
   delay(3000);
 
@@ -103,10 +103,6 @@ void loop() {
 
   //boolean streaming = streamingMode.handleStream();
   boolean streaming = streamingMode.newHandleStream();
-}
-
-void parserSetup() {
-  streamingMode.setParser(&smParser);
 }
 
 
