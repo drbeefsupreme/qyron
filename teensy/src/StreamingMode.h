@@ -116,7 +116,7 @@ public:
             strcpy(tempChars, receivedChars);
             debug("tempChars:");
             debug(tempChars);
-            smParser->parseData(&tempChars);
+            smParser->parseData(tempChars);
             smParser->handleParsedData();
             newData = false;
             return true;
