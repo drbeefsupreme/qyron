@@ -77,7 +77,7 @@ int freeRam()
 #include "StreamingMode.h"
 #include "SmartMatrixParser.h"
 StreamingMode streamingMode;
-SmartMatrixParser smParser;
+SmartMatrixParser smParser(1024);
 /*
 ** Later I should consider abstracting the device as a class, like LedDeviceTpm2 in hyperion.
 */
