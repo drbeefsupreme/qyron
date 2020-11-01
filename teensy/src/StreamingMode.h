@@ -26,8 +26,6 @@ public:
           // variables to hold the parsed data
     char commandFromPC[numChars] = {0};
     char stringFromPC[numChars] = {0};
-    int integerFromPC = 0;
-    float floatFromPC = 0.0;
 
     boolean newData = false;
 
