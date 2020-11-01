@@ -99,7 +99,7 @@ public:
     boolean newData = false;
 
     void recvWithStartEndMarkers() {
-       static bool recvInProgress = false;
+       static boolean recvInProgress = false;
        static byte ndx = 0;
 
        char startMarker = '<';
@@ -149,13 +149,16 @@ public:
         strcpy(stringFromPC, strtokIndx);
     }
 
-    void handleStream() {
+    boolean handleStream() {
         recvWithStartEndMarkers();
         if (newData == true) {
             strcpy(tempChars, receivedChars); //this is used to proect original data since strtok is destructive
             parseData();
             handleParsedData();
             newData = false;
+            return true;
+        } else {
+            return false;
         }
     }
 
