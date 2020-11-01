@@ -13,14 +13,16 @@ private:
 
 public:
 
-    byte numChars;
-    char commandFromPC[], stringFromPC[];
+    static const byte numChars = 32;
+    char commandFromPC[numChars] = {0};
+    char stringFromPC[numChars] = {0};
 
+    /*
     SmartMatrixParser(byte numCharsIn = 64) {
         numChars = numCharsIn;
         commandFromPC[numCharsIn] = {0};
         stringFromPC[numCharsIn] = {0};
-    }
+    }*/
 
     void handleParsedData() {
         debug("handleParsedData()");
