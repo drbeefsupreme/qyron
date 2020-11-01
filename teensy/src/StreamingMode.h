@@ -117,6 +117,7 @@ public:
             debug("tempChars:");
             debug(tempChars);
             smParser->parseData(tempChars);
+            debug("smParser->parseData done");
             smParser->handleParsedData();
             newData = false;
             return true;
