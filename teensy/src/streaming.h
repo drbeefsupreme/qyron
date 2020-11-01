@@ -85,6 +85,80 @@ public:
 
     String inputText = "";
 
+
+    static const byte numChars = 32;
+    char receivedChars[numChars];
+    char tempChars[numChars];        // temporary array for use when parsing
+
+          // variables to hold the parsed data
+    char commandFromPC[numChars] = {0};
+    char stringFromPC[numChars] = {0};
+    int integerFromPC = 0;
+    float floatFromPC = 0.0;
+
+    boolean newData = false;
+
+    void recvWithStartEndMarkers() {
+       static bool recvInProgress = false;
+       static byte ndx = 0;
+
+       char startMarker = '<';
+       char endMarker = '>';
+
+       char rc;
+
+       while (Serial.available() > 0 && newData == false) {
+         rc = Serial.read();
+
+         if (recvInProgress == true) {
+           if (rc != endMarker) {
+             receivedChars[ndx] = rc;
+             ndx++;
+             if (ndx >= numChars) {
+               ndx = numChars - 1;
+
+             }
+           } else {
+             receivedChars[ndx] = '\0';
+             recvInProgress = false;
+             ndx = 0;
+             newData = true;
+           }
+         }
+         else if (rc == startMarker) {
+           recvInProgress = true;
+         }
+       }
+    }
+
+    void handleParsedData() {
+        if (commandFromPC == "print") {
+            scrollingLayer1.start(stringFromPC, -1);
+        }
+    }
+
+     //split the data into parts
+    void parseData() {
+
+        char * strtokIndx;
+
+        strtokIndx = strtok(tempChars,"+"); //get the first part - the command
+        strcpy(commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
+
+        strtokIndx = strtok(NULL, "+"); //continueparsing from where the previous call left off
+        strcpy(stringFromPC, strtokIndx);
+    }
+
+    void handleStream() {
+        recvWithStartEndMarkers();
+        if (newData == true) {
+            strcpy(tempChars, receivedChars); //this is used to proect original data since strtok is destructive
+            parseData();
+            handleParsedData();
+            newData = false;
+        }
+    }
+
     boolean handleStreaming() {
         boolean receivedData = false;
 
