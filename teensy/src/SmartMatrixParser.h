@@ -26,15 +26,20 @@ public:
 
     void handleParsedData() {
         debug("handleParsedData()");
-        if (strcmp(commandFromPC, "print") == 0) {
-            debug("print command received");
+        if (strcmp(commandFromPC, "layer1") == 0) {
             scrollingLayer1.start(stringFromPC, -1);
-        } else if (strcmp(commandFromPC, "print2") == 0) {
-            debug("layer 2 print command received");
+        } else if (strcmp(commandFromPC, "layer2") == 0) {
             scrollingLayer2.start(stringFromPC, -1);
+        } else if (strcmp(commandFromPC, "layer3") == 0) {
+            scrollingLayer3.start(stringFromPC, -1);
+        } else if (strcmp(commandFromPC, "layer4") == 0) {
+            scrollingLayer4.start(stringFromPC, -1);
+        } else if (strcmp(commandFromPC, "layer5") == 0) {
+            scrollingLayer5.start(stringFromPC, -1);
         } else {
             debug("invalid command");
         }
+
     }
 
     //takes in an input string and breaks it into a command and arguments and stores it in the object
