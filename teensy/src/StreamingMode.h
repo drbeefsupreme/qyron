@@ -20,7 +20,7 @@ private:
 
 public:
 
-    static const byte numChars = 32;
+    static const short numChars = 1024;
     char receivedChars[numChars];
     char tempChars[numChars];        // temporary array for use when parsing
 

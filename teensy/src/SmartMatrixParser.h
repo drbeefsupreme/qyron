@@ -2,6 +2,7 @@
 #define __SMARTMATRIXPARSER_H_
 
 #include <string.h>
+#include <stdlib.h>
 
 /*
 ** SmartMatrixParser translates received commands into
@@ -11,18 +12,17 @@
 class SmartMatrixParser {
 private:
 
+    const short numChars;
+    char *commandFromPC;
+    char *stringFromPC;
+
 public:
 
-    static const short numChars = 1024;
-    char commandFromPC[numChars] = {0};
-    char stringFromPC[numChars] = {0};
-
-    /*
-    SmartMatrixParser(byte numCharsIn = 64) {
-        numChars = numCharsIn;
-        commandFromPC[numCharsIn] = {0};
-        stringFromPC[numCharsIn] = {0};
-    }*/
+    SmartMatrixParser(short numCharsIn = 1024): numChars(numCharsIn) {
+//        this->numChars = numCharsIn;
+        char *commandFromPC = (char*)calloc(this->numChars, sizeof(char));
+        char *stringFromPC = (char*)calloc(this->numChars, sizeof(char));
+    }
 
     void handleParsedData() {
         debug("handleParsedData()");
@@ -50,10 +50,10 @@ public:
         debug("parseData() inputString:");
         debug(inputString);
         strtokIndx = strtok(inputString, "+"); //get the first part - the command
-        strcpy(commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
+        strcpy(this->commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
 
         strtokIndx = strtok(NULL, "+"); //continueparsing from where the previous call left off
-        strcpy(stringFromPC, strtokIndx);
+        strcpy(this->stringFromPC, strtokIndx);
     }
 };
 
