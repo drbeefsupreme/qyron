@@ -92,6 +92,7 @@ void setup() {
   demoSetup();  //initializes the matrix and demo layers
 
 
+  delay(3000);
 
   debug("entering loop...");
 }
