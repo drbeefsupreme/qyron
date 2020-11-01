@@ -45,16 +45,10 @@ public:
         debug("parseData() inputString:");
         debug(inputString);
         strtokIndx = strtok(inputString, "+"); //get the first part - the command
-        delay(1000);
-        debug("after strtok?");
         strcpy(commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
-        delay(1000);
-        debug(commandFromPC);
 
         strtokIndx = strtok(NULL, "+"); //continueparsing from where the previous call left off
-        delay(1000);
         strcpy(stringFromPC, strtokIndx);
-        debug(stringFromPC);
     }
 };
 
