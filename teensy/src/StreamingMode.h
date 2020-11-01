@@ -19,11 +19,6 @@ private:
 
 public:
 
-    boolean haveReceivedData = false;
-
-    String inputText = "";
-
-
     static const byte numChars = 32;
     char receivedChars[numChars];
     char tempChars[numChars];        // temporary array for use when parsing

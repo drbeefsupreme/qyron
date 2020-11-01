@@ -3,7 +3,7 @@ Firmware for the Teensy 3.6 for the Quantum Metachyron project, a part of the
 Too Late Show conspiracy board.
 */
 
-#include <TPM2.h> //packet protocol
+//#include <TPM2.h> //packet protocol
 #include <SmartLEDShieldV4.h> //shield firmware
 #include <SmartMatrix3.h> //HUB75 library
 
@@ -72,7 +72,7 @@ int freeRam()
 
 
 //My libraries
-#include "streaming.h"
+#include "StreamingMode.h"
 StreamingMode streamingMode;
 /*
 ** Later I should consider abstracting the device as a class, like LedDeviceTpm2 in hyperion.
@@ -97,10 +97,6 @@ void setup() {
 
 void loop() {
 
-  //boolean streaming = streamingMode.handleStreaming();
-  //streamingMode.drawFrame();
-  //
-  //backgroundLayer.fillScreen(defaultBackgroundColor);
 
   boolean streaming = streamingMode.handleStream();
 }
@@ -132,12 +128,4 @@ void demoSetup() {
 
   scrollingLayer1.setOffsetFromTop((kMatrixHeight/2) - 5);
   scrollingLayer2.setOffsetFromTop((kMatrixHeight/4) - 5);
-}
-
-void textLayer1() {
-  scrollingLayer1.start("LAYER 1", -1);
-}
-
-void textLayer2() {
-  scrollingLayer2.start("LAYER 2", -1);
 }
