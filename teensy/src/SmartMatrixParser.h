@@ -40,6 +40,9 @@ public:
 
         char * strtokIndx;
 
+        debug("parseData() inputString:");
+        debug(inputString);
+
         strtokIndx = strtok(inputString, "+"); //get the first part - the command
         strcpy(commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
         debug(commandFromPC);
