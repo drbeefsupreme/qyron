@@ -1,7 +1,8 @@
 # qyron
 
 This is software for the Raspberry Pi and Teensy 3.6 w/ SmartMatrix LED Shield
-v3 used for making SmartMatrix API calls via USB serial.
+v3 used for making SmartMatrix API calls via USB serial. There's nothing
+specific to the Raspberry Pi for it yet, but there will be someday.
 
 This shouldn't be used by anyone yet, but some of the patterns may be helpful examples.
 
