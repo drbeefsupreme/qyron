@@ -72,7 +72,7 @@ int freeRam()
 
 
 //My libraries
-#include "streaming.h"
+#include "StreamingMode.h"
 StreamingMode streamingMode;
 /*
 ** Later I should consider abstracting the device as a class, like LedDeviceTpm2 in hyperion.
@@ -97,11 +97,15 @@ void setup() {
 
 void loop() {
 
-  boolean streaming = streamingMode.handleStreaming();
+  //boolean streaming = streamingMode.handleStreaming();
   //streamingMode.drawFrame();
   //
   //backgroundLayer.fillScreen(defaultBackgroundColor);
+
+  boolean streaming = streamingMode.handleStream();
 }
+
+
 
 
 void demoSetup() {

@@ -1,0 +1,160 @@
+#include "StreamingMode.h"
+
+
+
+/*
+** This file contains the code for reading TPM packets and copying them to the chyron. This code
+** has been largely copied from aurora/StreamingMode.h
+**
+*/
+
+void StreamingMode::drawFrameTPM2() {
+    int bufferSize = matrix.getScreenHeight() * matrix.getScreenWidth() * 3;
+    //rgb24 *buffer = backgroundLayer.backBuffer(); //defined in SM3/MatrixCommon.h
+
+    // Check header
+    if (SERIAL.read() != tpm2Header)
+        return;
+
+    // Only handle data frames (? Maybe I should allow data and command frames, later)
+    if (SERIAL.read() != tpm2Command)
+        return;
+
+
+    int payloadSize = (SERIAL.read() << 8) | SERIAL.read();
+
+    // Don't allow frame to overrun buffer
+    if (payloadSize > bufferSize)
+        return ;
+
+    // Copy frame data into buffer
+    //int bytesReceived = SERIAL.readBytes((char *) buffer, payloadSize);
+
+    //read the command
+    int command = SERIAL.read();
+
+    // TODO: Generalize this to work with other layers
+    //backgroundLayer.swapBuffers(); //for some reason it is commented out in aurora, does it update some other way?
+
+    if (command == tpm2Layer1)
+        scrollingLayer1.start("PACKET 1", -1);
+    else if (command == tpm2Layer2)
+        scrollingLayer2.start("PACKET 2", -1);
+    else if (command == tpm2BeginText)
+        inputText = SERIAL.readString();
+        scrollingLayer1.start(inputText.c_str(), -1);
+
+
+    // Make sure we received what we were promised
+    //if (bytesReceived != payloadSize)
+    //return;
+
+    // Check footer
+    if (SERIAL.read() != tpm2Footer)
+        return;
+
+    // If packet is valid, swap buffers and ack
+
+    SERIAL.write(tpm2Acknowledge);
+
+}
+
+void StreamingMode::recvWithStartEndMarkers() {
+  static bool recvInProgress = false;
+  static byte ndx = 0;
+
+  char rc;
+
+  while (Serial.available() > 0 && newData == false) {
+    rc = Serial.read();
+
+    if (recvInProgress == true) {
+      if (rc != endMarker) {
+        receivedChars[ndx] = rc;
+        ndx++;
+        if (ndx >= numChars) {
+          ndx = numChars - 1;
+
+        }
+      } else {
+        receivedChars[ndx] = '\0';
+        recvInProgress = false;
+        ndx = 0;
+        newData = true;
+      }
+    }
+    else if (rc == startMarker) {
+      recvInProgress = true;
+    }
+  }
+}
+
+void StreamingMode::handleParsedData() {
+    if (commandFromPC == "print") {
+        scrollingLayer1.start(stringFromPC, -1);
+    }
+}
+
+//split the data into parts
+void StreamingMode::parseData() {
+
+  char * strtokIndx;
+
+  strtokIndx = strtok(tempChars,"+"); //get the first part - the command
+  strcpy(commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
+
+  strtokIndx = strtok(NULL, "+"); //continueparsing from where the previous call left off
+  strcpy(stringFromPC, strtokIndx);
+}
+
+void StreamingMode::handleStream() {
+    recvWithStartEndMarkers();
+    if (newData == true) {
+        strcpy(tempChars, receivedChars); //this is used to proect original data since strtok is destructive
+        parseData();
+        handleParsedData();
+        newData = false;
+    }
+}
+
+unsigned int StreamingMode::drawFrame() {
+    //Make sure serial data is available
+    if (SERIAL.available() > 0) {
+        if (SERIAL.peek() == tpm2Header) {
+            drawFrameTPM2();
+            //Record when last data came in
+            lastData = millis();
+        }
+    } else if (millis() - lastData > 1000) {
+        //If it's been longer than a second since we last received data
+        //blank the screen and notify that we're waiting for data
+        debug("waiting...");
+        backgroundLayer.fillScreen({0x40, 0, 0});
+        backgroundLayer.swapBuffers();
+        //backgroundLayer.setFont(font3x5);
+        //backgroundLayer.drawString(3, 24, {255, 255, 255}, "Waiting");
+        //
+
+        scrollingLayer1.start("Waiting...", 1);
+
+    }
+    return 10;
+}
+
+StreamingMode::StreamingMode(void) {
+    lastData = 1000;
+
+    newData = false;
+
+    startMarker = '<';
+    endMarker = '>';
+
+    numChars = 32;
+
+    receivedChars[numChars];
+    tempChars[numChars];  //temp array for use when parsing
+
+    commandFromPC[numChars] = {0};
+    stringFromPC[numChars] = {0};
+
+}
