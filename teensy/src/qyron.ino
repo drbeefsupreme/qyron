@@ -99,8 +99,8 @@ void setup() {
 void loop() {
 
 
-  boolean streaming = streamingMode.handleStream();
-  //boolean streaming = streamingMode.newHandleStream();
+  //boolean streaming = streamingMode.handleStream();
+  boolean streaming = streamingMode.newHandleStream();
 }
 
 void parserSetup() {
