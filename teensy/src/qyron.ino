@@ -90,6 +90,7 @@ void setup() {
   delay(250);
   debug("Setup() starting");
   demoSetup();  //initializes the matrix and demo layers
+  parserSetup();
 
 
   delay(3000);
