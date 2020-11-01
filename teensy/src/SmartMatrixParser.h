@@ -13,7 +13,7 @@ private:
 
 public:
 
-    static const byte numChars = 32;
+    static const byte numChars = 1024;
     char commandFromPC[numChars] = {0};
     char stringFromPC[numChars] = {0};
 
