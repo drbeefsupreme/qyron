@@ -114,6 +114,7 @@ public:
         if (newData == true) {
             debug("new Handle stream");
             strcpy(tempChars, receivedChars);
+            debug(tempChars);
             smParser->parseData(tempChars);
             smParser->handleParsedData();
             newData = false;
