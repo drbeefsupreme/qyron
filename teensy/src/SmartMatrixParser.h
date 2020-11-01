@@ -44,6 +44,7 @@ public:
         debug(inputString);
 
         strtokIndx = strtok(inputString, "+"); //get the first part - the command
+        debug("after strtok?");
         strcpy(commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
         debug(commandFromPC);
 
