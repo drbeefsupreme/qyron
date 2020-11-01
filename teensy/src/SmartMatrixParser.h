@@ -28,10 +28,10 @@ public:
         debug("handleParsedData()");
         if (strcmp(commandFromPC, "print") == 0) {
             debug("print command received");
-            //scrollingLayer1.start(stringFromPC, -1);
+            scrollingLayer1.start(stringFromPC, -1);
         } else if (strcmp(commandFromPC, "print2") == 0) {
             debug("layer 2 print command received");
-            //scrollingLayer2.start(stringFromPC, -1);
+            scrollingLayer2.start(stringFromPC, -1);
         } else {
             debug("invalid command");
         }
