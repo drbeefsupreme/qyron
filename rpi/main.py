@@ -44,7 +44,7 @@ if __name__ == '__main__':
     print(conn.in_waiting)
 
     time.sleep(3)
-    controller.test_layer_1()
+    controller.display_text("advancedness")
     time.sleep(3)
     controller.test_layer_1()
 
