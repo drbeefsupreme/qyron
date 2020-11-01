@@ -64,7 +64,7 @@ public:
        }
     }
 
-    boolean newHandleStream() {
+    boolean streamLoop() {
         recvWithStartEndMarkers();
         if (newData == true) {
             debug("new Handle stream");
