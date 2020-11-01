@@ -144,14 +144,17 @@ public:
 
         strtokIndx = strtok(tempChars,"+"); //get the first part - the command
         strcpy(commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
+        debug(commandFromPC);
 
         strtokIndx = strtok(NULL, "+"); //continueparsing from where the previous call left off
         strcpy(stringFromPC, strtokIndx);
+        debug(stringFromPC);
     }
 
     boolean handleStream() {
         recvWithStartEndMarkers();
         if (newData == true) {
+            debug("newData");
             strcpy(tempChars, receivedChars); //this is used to proect original data since strtok is destructive
             parseData();
             handleParsedData();
