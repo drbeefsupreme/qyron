@@ -14,11 +14,10 @@ class CommandFormatter:
         if type(text) is not str:
             return ''
 
-        command = b"".join((tpm2Header,
-                  tpm2Command,
-                  tpm2BeginText,
-                  text.encode(),  #encodes string as raw bytes
-                  tpm2Footer))
+        command = b"".join((b'<print+',
+                            text.encode(),
+                            b'+>'))
+        return command
 
     @staticmethod
     def test_layer_1():
@@ -32,5 +31,8 @@ class CommandFormatter:
         """
 
         #command = b'\xc9\xc0\x00\x01\x01\x36'
-        command = b'\xc9\xc0\x00\x01\x02\x36'
+        #command = "<print2+test layer 1>"
+
+        command = b'<print2+testlayer1+>'
+
         return command
