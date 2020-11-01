@@ -51,6 +51,8 @@ public:
         debug(inputString);
         strtokIndx = strtok(inputString, "+"); //get the first part - the command
         strcpy(this->commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
+        debug("strcpy");
+        debug(commandFromPC);
 
         strtokIndx = strtok(NULL, "+"); //continueparsing from where the previous call left off
         strcpy(this->stringFromPC, strtokIndx);
