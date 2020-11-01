@@ -20,6 +20,10 @@ private:
 
 public:
 
+    static const byte numChars = 32;
+    char receivedChars[numChars];
+    char tempChars[numChars];        // temporary array for use when parsing
+
     boolean newData = false;
     SmartMatrixParser * smParser;
 
