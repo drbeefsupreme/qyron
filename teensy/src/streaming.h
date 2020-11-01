@@ -18,6 +18,8 @@
 #define tpm2EndText 0xaa
 
 
+#include <string.h>
+
 /*
 ** This file contains the code for reading TPM packets and copying them to the chyron. This code
 ** has been largely copied from aurora/StreamingMode.h
@@ -132,7 +134,9 @@ public:
     }
 
     void handleParsedData() {
-        if (commandFromPC == "print") {
+        debug("handleParsedData()");
+        if (strcmp(commandFromPC,"print") == 0) {
+            debug("print command received");
             scrollingLayer1.start(stringFromPC, -1);
         }
     }
