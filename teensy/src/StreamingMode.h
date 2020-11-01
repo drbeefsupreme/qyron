@@ -3,6 +3,7 @@
 
 
 #include <string.h>
+#include <SmartMatrixParser.h>
 
 /*
 ** StreamingMode is responsible for reading and parsing commands received over the serial connection.
@@ -28,6 +29,11 @@ public:
     char stringFromPC[numChars] = {0};
 
     boolean newData = false;
+    SmartMatrixParser * smParser;
+
+    void setParser(SmartMatrixParser * smPP) {
+            smParser = smPP;
+    }
 
     void recvWithStartEndMarkers() {
        static boolean recvInProgress = false;
@@ -38,8 +44,8 @@ public:
 
        char rc;
 
-       while (Serial.available() > 0 && newData == false) {
-         rc = Serial.read();
+       while (SERIAL.available() > 0 && newData == false) {
+         rc = SERIAL.read();
 
          if (recvInProgress == true) {
            if (rc != endMarker) {
@@ -96,6 +102,20 @@ public:
             strcpy(tempChars, receivedChars); //this is used to proect original data since strtok is destructive
             parseData();
             handleParsedData();
+            newData = false;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    boolean newHandleStream() {
+        recvWithStartEndMarkers();
+        if (newData == true) {
+            debug("new Handle stream");
+            strcpy(tempChars, receivedChars);
+            smParser->parseData(tempChars);
+            smParser->handleParsedData();
             newData = false;
             return true;
         } else {

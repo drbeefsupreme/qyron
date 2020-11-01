@@ -72,7 +72,9 @@ int freeRam()
 
 //My libraries
 #include "StreamingMode.h"
+#include "SmartMatrixParser.h"
 StreamingMode streamingMode;
+SmartMatrixParser smParser(64);
 /*
 ** Later I should consider abstracting the device as a class, like LedDeviceTpm2 in hyperion.
 */
@@ -97,7 +99,12 @@ void setup() {
 void loop() {
 
 
-  boolean streaming = streamingMode.handleStream();
+  //boolean streaming = streamingMode.handleStream();
+  boolean streaming = streamingMode.newHandleStream();
+}
+
+void parserSetup() {
+  streamingMode.setParser(&smParser);
 }
 
 
