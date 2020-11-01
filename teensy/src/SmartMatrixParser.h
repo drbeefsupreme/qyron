@@ -13,14 +13,16 @@ private:
 
 public:
 
-    byte numChars;
-    char commandFromPC[], stringFromPC[];
+    static const byte numChars = 32;
+    char commandFromPC[numChars] = {0};
+    char stringFromPC[numChars] = {0};
 
+    /*
     SmartMatrixParser(byte numCharsIn = 64) {
         numChars = numCharsIn;
         commandFromPC[numCharsIn] = {0};
         stringFromPC[numCharsIn] = {0};
-    }
+    }*/
 
     void handleParsedData() {
         debug("handleParsedData()");
@@ -40,13 +42,13 @@ public:
 
         char * strtokIndx;
 
+        debug("parseData() inputString:");
+        debug(inputString);
         strtokIndx = strtok(inputString, "+"); //get the first part - the command
         strcpy(commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
-        debug(commandFromPC);
 
         strtokIndx = strtok(NULL, "+"); //continueparsing from where the previous call left off
         strcpy(stringFromPC, strtokIndx);
-        debug(stringFromPC);
     }
 };
 

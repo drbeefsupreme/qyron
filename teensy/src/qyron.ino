@@ -74,7 +74,7 @@ int freeRam()
 #include "StreamingMode.h"
 #include "SmartMatrixParser.h"
 StreamingMode streamingMode;
-SmartMatrixParser smParser(64);
+SmartMatrixParser smParser;
 /*
 ** Later I should consider abstracting the device as a class, like LedDeviceTpm2 in hyperion.
 */
@@ -91,7 +91,9 @@ void setup() {
   debug("Setup() starting");
   demoSetup();  //initializes the matrix and demo layers
 
+  streamingMode.setParser(&smParser);
 
+  delay(3000);
 
   debug("entering loop...");
 }
@@ -101,10 +103,6 @@ void loop() {
 
   //boolean streaming = streamingMode.handleStream();
   boolean streaming = streamingMode.newHandleStream();
-}
-
-void parserSetup() {
-  streamingMode.setParser(&smParser);
 }
 
 
