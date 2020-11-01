@@ -50,6 +50,7 @@ public:
         debug("parseData() inputString:");
         debug(inputString);
         strtokIndx = strtok(inputString, "+"); //get the first part - the command
+        debug("after strtok");
         strcpy(this->commandFromPC, strtokIndx); // copy the command to the command buffer commandFromPC
         debug("strcpy");
         debug(commandFromPC);
