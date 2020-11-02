@@ -20,12 +20,17 @@ private:
 
 public:
 
-    static const short numChars = 1024;
-    char receivedChars[numChars];
-    char tempChars[numChars];        // temporary array for use when parsing
+    const short numChars;
+    char *receivedChars, *tempChars;        // temporary array for use when parsing
 
     boolean newData = false;
     SmartMatrixParser * smParser;
+
+    StreamingMode(SmartMatrixParser * smParser, short numChars=1024): numChars(numChars) {
+        this->smParser = smParser;
+        char *receivedChars = (char*)calloc(numChars, sizeof(char));
+        char *tempChars = (char*)calloc(numChars, sizeof(char));
+    }
 
     void setParser(SmartMatrixParser * smPP) {
             smParser = smPP;
