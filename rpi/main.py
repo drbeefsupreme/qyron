@@ -46,26 +46,4 @@ if __name__ == '__main__':
     time.sleep(3)
     controller.display_text("advancedness")
     time.sleep(3)
-    controller.test_layer_1()
-
-"""
-if __name__ == '__main__':
-    ser = serial.Serial('/dev/ttyACM0', 115200, timeout=5)
-    ser.flush()
-    print("test1")
-    print(ser.name)
-    print(ser.is_open)
-    print(ser.in_waiting)
-
-    layer1command = b'\xc9\xc0\x00\x01\x01\x36'
-    layer2command = b'\xc9\xc0\x00\x01\x02\x36'
-    stringCommand = b'\xc9\xc0\x00\x03' + b' bweh'
-    stringCommand2 = b'\xc9\xc0\x00\x03' + b' skrrt'
-    #stringText = b'hello'
-    #stringPacket = stringCommand + stringText
-
-    time.sleep(2)
-    ser.write(layer1command)
-    time.sleep(2)
-    ser.write(layer2command)
-"""
+    controller.display_text("layer2",2)

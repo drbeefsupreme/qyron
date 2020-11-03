@@ -15,13 +15,13 @@ class Controller:
         # Sets the serial connection for the Controller
         self.conn = conn
 
-    def display_text(self, text):
+    def display_text(self, text, layer=1):
         # Displays input text
 
-        print_verbose('display_text: ' + text)
+        print_verbose('display_text: ' + text + ' layer ' + str(layer))
 
         try:
-            command = CommandFormatter.display_text_command(text)
+            command = CommandFormatter.display_text_command(text, layer)
             self.conn.write(command)
             print_verbose('command sent')
             self.state = []
