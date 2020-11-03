@@ -33,7 +33,7 @@ public:
 
     void recvWithStartEndMarkers() {
        static boolean recvInProgress = false;
-       static byte ndx = 0;
+       static short ndx = 0;
 
        char startMarker = '<';
        char endMarker = '>';
