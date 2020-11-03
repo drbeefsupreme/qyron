@@ -88,7 +88,7 @@ const rgb24 defaultBackgroundColor = {0x40, 0, 0};
 
 void setup() {
   delay(1000);
-  SERIAL.begin(115200);
+  SERIAL.begin(9600);
 
   delay(250);
   debug("Setup() starting");
@@ -137,7 +137,8 @@ void demoSetup() {
   scrollingLayer4.setSpeed(80);
   scrollingLayer5.setSpeed(120);
 
-  scrollingLayer1.setFont(gohufont11b);
+//  scrollingLayer1.setFont(gohufont11b);
+  scrollingLayer1.setFont(font8x13);
   scrollingLayer2.setFont(gohufont11);
   scrollingLayer3.setFont(font8x13);
   scrollingLayer4.setFont(font6x10);

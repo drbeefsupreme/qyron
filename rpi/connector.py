@@ -8,7 +8,7 @@ import serial
 import time
 
 class Connector:
-    def __init__(self, serial_port='/dev/ttyACM0', baud_rate=115200, read_timeout=5, verbose=True):
+    def __init__(self, serial_port='/dev/ttyACM0', baud_rate=9600, read_timeout=5, verbose=True):
         self.conn = None
         self.serial_port = serial_port
         self.read_timeout = read_timeout

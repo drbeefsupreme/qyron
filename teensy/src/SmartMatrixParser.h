@@ -43,7 +43,13 @@ public:
     void handleParsedData() {
         debug("handleParsedData()");
         if (strcmp(commandFromPC, "layer1") == 0) {
+            debug("before start");
+            debug(stringFromPC);
             scrollingLayer1.start(stringFromPC, -1);
+            debug("After start");
+            debug(stringFromPC);
+        } else if (strcmp(commandFromPC, "update") == 0) {
+            scrollingLayer1.update(stringFromPC);
         } else if (strcmp(commandFromPC, "layer2") == 0) {
             scrollingLayer2.start(stringFromPC, -1);
         } else if (strcmp(commandFromPC, "layer3") == 0) {
@@ -92,6 +98,8 @@ public:
 
         strtokIndx = strtok(NULL, "+"); //continueparsing from where the previous call left off
         this->stringFromPC = strdup(strtokIndx);
+        debug("stringFromPC");
+        debug(stringFromPC);
     }
 };
 
