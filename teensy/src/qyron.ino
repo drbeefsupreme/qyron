@@ -132,7 +132,7 @@ void demoSetup() {
   scrollingLayer5.setColor({0xff, 0x00, 0x00});
 
   scrollingLayer1.setSpeed(50);
-  scrollingLayer2.setSpeed(50);
+  scrollingLayer2.setSpeed(70);
   scrollingLayer3.setSpeed(40);
   scrollingLayer4.setSpeed(80);
   scrollingLayer5.setSpeed(120);
