@@ -83,7 +83,7 @@ SmartMatrixParser smParser(8192);
 */
 
 // constants
-const int defaultBrightness = (10*255)/100;
+const int defaultBrightness = (7*255)/100;
 const rgb24 defaultBackgroundColor = {0x40, 0, 0};
 
 void setup() {
@@ -125,7 +125,7 @@ void demoSetup() {
   scrollingLayer4.setMode(wrapForward);
   scrollingLayer5.setMode(bounceForward);
 
-  scrollingLayer1.setColor({0xff, 0xff, 0xff});
+  scrollingLayer1.setColor({0xff, 0x00, 0x00});
   scrollingLayer2.setColor({0xff, 0x00, 0xff});
   scrollingLayer3.setColor({0xff, 0xff, 0x00});
   scrollingLayer4.setColor({0x00, 0x00, 0xff});
