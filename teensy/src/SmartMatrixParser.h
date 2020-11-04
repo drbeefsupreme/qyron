@@ -29,7 +29,7 @@ private:
         Command* items[11];
     } commands;
 
-        int matchCommand(string command) {
+        int matchCommand(char* command) {
             return strcmp(commandFromPC, command);
         }
 
