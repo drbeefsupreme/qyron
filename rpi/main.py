@@ -20,7 +20,7 @@ SERIAL_PORT = '/dev/ttyACM0'
 READ_TIMEOUT = 5
 
 ##if __name__ == '__main__':
-def main():
+def bweh():
     options = {
         'serial_port': SERIAL_PORT,
         'read_timeout': READ_TIMEOUT,
