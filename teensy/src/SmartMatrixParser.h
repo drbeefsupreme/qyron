@@ -65,15 +65,15 @@ public:
             scrollingLayer4.update("");
             scrollingLayer5.update("");
         } else if (matchCommand("loop1")) {
-            scollingLayer1.start(stringFromPC, -1);
+            scrollingLayer1.start(stringFromPC, -1);
         } else if (matchCommand("loop2")) {
-            scollingLayer2.start(stringFromPC, -1);
+            scrollingLayer2.start(stringFromPC, -1);
         } else if (matchCommand("loop3")) {
-            scollingLayer3.start(stringFromPC, -1);
+            scrollingLayer3.start(stringFromPC, -1);
         } else if (matchCommand("loop4")) {
-            scollingLayer4.start(stringFromPC, -1);
+            scrollingLayer4.start(stringFromPC, -1);
         } else if (matchCommand("loop5")) {
-            scollingLayer5.start(stringFromPC, -1);
+            scrollingLayer5.start(stringFromPC, -1);
         } else {
             debug("invalid command");
         }
