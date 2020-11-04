@@ -20,7 +20,7 @@ private:
 
 public:
 
-    static const short numChars = 1024;
+    static const short numChars = 8192;
     char receivedChars[numChars];
     char tempChars[numChars];        // temporary array for use when parsing
 

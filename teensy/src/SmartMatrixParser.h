@@ -35,7 +35,7 @@ private:
 
 public:
 
-    SmartMatrixParser(short numChars = 1024): numChars(numChars) {
+    SmartMatrixParser(short numChars = 8192): numChars(numChars) {
         // list initialization necesssary for const
 //        this->numChars = numCharsIn;
         //char *commandFromPC = (char*)calloc(this->numChars, sizeof(char));
