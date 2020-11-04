@@ -29,9 +29,9 @@ private:
         Command* items[11];
     } commands;
 
-        int matchCommand(char* command) {
-            return strcmp(commandFromPC, command);
-        }
+    boolean matchCommand(char* command) {
+        return (strcmp(commandFromPC, command) == 0);
+    }
 
 public:
 
@@ -46,24 +46,34 @@ public:
 
     void handleParsedData() {
         debug("handleParsedData()");
-        if (matchCommand("layer1") == 0) {
-            scrollingLayer1.start(stringFromPC, -1);
-        } else if (matchCommand("layer1") == 0) {
+        if (matchCommand("layer1")) {
+            scrollingLayer1.start(stringFromPC, 1);
+        } else if (matchCommand("update1")) {
             scrollingLayer1.update(stringFromPC);
-        } else if (matchCommand("layer2") == 0) {
-            scrollingLayer2.start(stringFromPC, -1);
-        } else if (matchCommand("layer3") == 0) {
-            scrollingLayer3.start(stringFromPC, -1);
-        } else if (matchCommand("layer4") == 0) {
-            scrollingLayer4.start(stringFromPC, -1);
-        } else if (matchCommand("layer5") == 0) {
-            scrollingLayer5.start(stringFromPC, -1);
-        } else if (matchCommand("clear") == 0) {
+        } else if (matchCommand("layer2")) {
+            scrollingLayer2.start(stringFromPC, 1);
+        } else if (matchCommand("layer3")) {
+            scrollingLayer3.start(stringFromPC, 1);
+        } else if (matchCommand("layer4")) {
+            scrollingLayer4.start(stringFromPC, 1);
+        } else if (matchCommand("layer5")) {
+            scrollingLayer5.start(stringFromPC, 1);
+        } else if (matchCommand("clear")) {
             scrollingLayer1.update("");
             scrollingLayer2.update("");
             scrollingLayer3.update("");
             scrollingLayer4.update("");
             scrollingLayer5.update("");
+        } else if (matchCommand("loop1")) {
+            scollingLayer1.start(stringFromPC, -1);
+        } else if (matchCommand("loop2")) {
+            scollingLayer2.start(stringFromPC, -1);
+        } else if (matchCommand("loop3")) {
+            scollingLayer3.start(stringFromPC, -1);
+        } else if (matchCommand("loop4")) {
+            scollingLayer4.start(stringFromPC, -1);
+        } else if (matchCommand("loop5")) {
+            scollingLayer5.start(stringFromPC, -1);
         } else {
             debug("invalid command");
         }
