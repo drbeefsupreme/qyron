@@ -29,6 +29,10 @@ private:
         Command* items[11];
     } commands;
 
+        int matchCommand(string command) {
+            return strcmp(commandFromPC, command);
+        }
+
 public:
 
     SmartMatrixParser(short numChars = 1024): numChars(numChars) {
@@ -42,23 +46,19 @@ public:
 
     void handleParsedData() {
         debug("handleParsedData()");
-        if (strcmp(commandFromPC, "layer1") == 0) {
-            debug("before start");
-            debug(stringFromPC);
+        if (matchCommand("layer1") == 0) {
             scrollingLayer1.start(stringFromPC, -1);
-            debug("After start");
-            debug(stringFromPC);
-        } else if (strcmp(commandFromPC, "update") == 0) {
+        } else if (matchCommand("layer1") == 0) {
             scrollingLayer1.update(stringFromPC);
-        } else if (strcmp(commandFromPC, "layer2") == 0) {
+        } else if (matchCommand("layer2") == 0) {
             scrollingLayer2.start(stringFromPC, -1);
-        } else if (strcmp(commandFromPC, "layer3") == 0) {
+        } else if (matchCommand("layer3") == 0) {
             scrollingLayer3.start(stringFromPC, -1);
-        } else if (strcmp(commandFromPC, "layer4") == 0) {
+        } else if (matchCommand("layer4") == 0) {
             scrollingLayer4.start(stringFromPC, -1);
-        } else if (strcmp(commandFromPC, "layer5") == 0) {
+        } else if (matchCommand("layer5") == 0) {
             scrollingLayer5.start(stringFromPC, -1);
-        } else if (strcmp(commandFromPC, "clear") == 0) {
+        } else if (matchCommand("clear") == 0) {
             scrollingLayer1.update("");
             scrollingLayer2.update("");
             scrollingLayer3.update("");
