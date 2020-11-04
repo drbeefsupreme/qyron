@@ -83,7 +83,7 @@ SmartMatrixParser smParser(8192);
 */
 
 // constants
-const int defaultBrightness = (100*255)/100;
+const int defaultBrightness = (20*255)/100;
 const rgb24 defaultBackgroundColor = {0x40, 0, 0};
 
 void setup() {
