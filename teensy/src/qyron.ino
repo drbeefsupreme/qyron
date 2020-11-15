@@ -89,12 +89,13 @@ const rgb24 defaultBackgroundColor = {0x40, 0, 0};
 
 void setup() {
   delay(1000);
-  SERIAL.begin(115200);
+  //SERIAL.begin(115200);
+  Serial.begin(9600);
 
   delay(250);
   debug("Setup() starting");
   demoSetup();  //initializes the matrix and demo layers
-  io.begin(SERIAL); //passes the serial connection to the RPC lib
+  io.begin(Serial); //passes the serial connection to the RPC lib
 
   //streamingMode.setParser(&smParser);
 
