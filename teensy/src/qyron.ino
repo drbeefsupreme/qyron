@@ -5,6 +5,7 @@ Too Late Show conspiracy board.
 
 #include <SmartLEDShieldV4.h> //shield firmware
 #include <SmartMatrix3.h> //HUB75 library
+#include <simpleRPC.h>
 
 /*  SmartMatrix initialization, with settings for the chyron */
 
@@ -74,13 +75,13 @@ int freeRam()
 
 
 //My libraries
-#include "StreamingMode.h"
-#include "SmartMatrixParser.h"
-StreamingMode streamingMode;
-SmartMatrixParser smParser(1024);
-/*
-** Later I should consider abstracting the device as a class, like LedDeviceTpm2 in hyperion.
-*/
+//#include "StreamingMode.h"
+//#include "SmartMatrixParser.h"
+//StreamingMode streamingMode;
+//SmartMatrixParser smParser(1024);
+
+//simpleRPC io
+HardwareSerialIO io;
 
 // constants
 const int defaultBrightness = (100*255)/100;
@@ -93,8 +94,9 @@ void setup() {
   delay(250);
   debug("Setup() starting");
   demoSetup();  //initializes the matrix and demo layers
+  io.begin(SERIAL); //passes the serial connection to the RPC lib
 
-  streamingMode.setParser(&smParser);
+  //streamingMode.setParser(&smParser);
 
 
   delay(3000);
@@ -103,7 +105,12 @@ void setup() {
 
 void loop() {
 
-  boolean streaming = streamingMode.streamLoop();
+  //boolean streaming = streamingMode.streamLoop();
+
+  //The following adds SmartMatrix functions to the interface to be passed over the wire to the controller
+  interface(
+    io,
+    scrollingLayer1.start, "scrollingLayer1.start: display text on layer 1. @a: char* @return: none");
 }
 
 
