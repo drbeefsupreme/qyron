@@ -109,9 +109,9 @@ void loop() {
   //boolean streaming = streamingMode.streamLoop();
 
   //The following adds SmartMatrix functions to the interface to be passed over the wire to the controller
-  //interface(
-  //  io,
-  //  scrollingLayer1.start, "scrollingLayer1.start: display text on layer 1. @a: char* @return: none");
+  interface(
+    io,
+    pack(&scrollingLayer1, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayer1.start: display text on layer 1. @a: char* @return: none");
 }
 
 
