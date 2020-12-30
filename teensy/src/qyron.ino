@@ -81,7 +81,7 @@ int freeRam()
 //SmartMatrixParser smParser(1024);
 
 //simpleRPC io
-HardwareSerialIO io;
+StreamIO io;
 
 // constants
 const int defaultBrightness = (100*255)/100;
@@ -111,7 +111,7 @@ void loop() {
   //The following adds SmartMatrix functions to the interface to be passed over the wire to the controller
   interface(
     io,
-    scrollingLayer1.start, "scrollingLayer1.start: display text on layer 1. @a: char* @return: none");
+    pack(&scrollingLayer1, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayer1.start: display text on layer 1. @a: char* @return: none");
 }
 
 
