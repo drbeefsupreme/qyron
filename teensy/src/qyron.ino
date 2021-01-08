@@ -3,8 +3,8 @@ Firmware for the Teensy 3.6 for the Quantum Metachyron project, a part of the
 Too Late Show conspiracy board.
 */
 
-#include <SmartLEDShieldV4.h> //shield firmware
-#include <SmartMatrix3.h> //HUB75 library
+#include <MatrixHardware_Teensy3_ShieldV4.h> //shield firmware
+#include <SmartMatrix.h> //HUB75 library
 #include <simpleRPC.h>
 
 /*  SmartMatrix initialization, with settings for the chyron */
