@@ -60,6 +60,7 @@ class BigDumbForm(FlaskForm):
     parody = SubmitField('PARODY')
 
     featureDemo = SubmitField('demo')
+    randomShapes = SubmitField('randomShapes')
 
     setRedBG = SubmitField('red bg')
     setBlackBG = SubmitField('black bg')
@@ -156,6 +157,8 @@ def dumb():
                 currentText[i] = " "
         if form.featureDemo.data:
             interface.runFeatureDemo()
+        if form.randomShapes.data:
+            interface.drawRandomShapes()
         if form.setBlackBG.data:
             interface.setBlackBackground()
         if form.setRedBG.data:

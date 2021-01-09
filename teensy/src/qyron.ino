@@ -148,6 +148,7 @@ void loop() {
 
     //routines
     runFeatureDemo, "runFeatureDemo: runs the feature demo. @a: none @return: none.",
+    drawRandomShapes, "drawRandomShapes: draws random shapes. @a: none @return: none.",
 
     //background
     setBlackBackground, "setBlackBackground: sets bg to black. @a: none @return: none.",
@@ -258,41 +259,118 @@ void drawBitmap(int16_t x, int16_t y, const gimp32x32bitmap* bitmap) {
   }
 }
 
-#define DEMO_INTRO              1
-#define DEMO_DRAWING_INTRO      1
-#define DEMO_DRAWING_PIXELS     1
-#define DEMO_DRAWING_LINES      1
-#define DEMO_DRAWING_TRIANGLES  1
-#define DEMO_DRAWING_CIRCLES    1
-#define DEMO_DRAWING_RECTANGLES 1
-#define DEMO_DRAWING_ROUNDRECT  1
-#define DEMO_DRAWING_FILLED     1
-#define DEMO_FILL_SCREEN        1
-#define DEMO_DRAW_CHARACTERS    1
-#define DEMO_FONT_OPTIONS       1
-#define DEMO_MONO_BITMAP        1
-#define DEMO_SCROLL_COLOR       1
-#define DEMO_SCROLL_MODES       1
-#define DEMO_SCROLL_SPEED       1
-#define DEMO_SCROLL_FONTS       1
-#define DEMO_SCROLL_POSITION    1
-#define DEMO_SCROLL_ROTATION    1
-#define DEMO_BRIGHTNESS         1
-#define DEMO_RAW_BITMAP         1
-#define DEMO_COLOR_CORRECTION   1
-#define DEMO_BACKGND_BRIGHTNESS 1
-#define DEMO_INDEXED_LAYER      1
-#define DEMO_REFRESH_RATE       1
-#define DEMO_READ_PIXEL         1
-
 void runFeatureDemo() {
     backgroundLayer.fillScreen(defaultBackgroundColor);
     backgroundLayer.swapBuffers();
+
+    int i, j;
+    unsigned long currentMillis;
 
     scrollingLayerF.setColor({0xff, 0xff, 0xff});
     scrollingLayerF.setMode(wrapForward);
     scrollingLayerF.setSpeed(40);
     scrollingLayerF.setFont(font6x10);
-    scrollingLayerF.start("SmartMatrix Demo", 1);
+    scrollingLayerF.start("THE TOO LATE SHOW WITH DR. BEELZEBUB CROW", 1);
+}
 
+void drawRandomShapes() {
+    int i, j;
+    unsigned long currentMillis;
+
+    const int delayBetweenShapes = 250;
+
+    for (i = 0; i < 10000; i += delayBetweenShapes) {
+        // draw for 100ms, then update frame, repeat
+        currentMillis = millis();
+        int x0, y0, x1, y1, x2, y2, radius, radius2;
+        // x0,y0 pair is always on the screen
+        x0 = random(matrix.getScreenWidth());
+        y0 = random(matrix.getScreenHeight());
+
+ #if 0
+        // x1,y1 pair can be off screen;
+        x1 = random(-matrix.getScreenWidth(), 2 * matrix.getScreenWidth());
+        y1 = random(-matrix.getScreenHeight(), 2 * matrix.getScreenHeight());
+ #else
+        x1 = random(matrix.getScreenWidth());
+        y1 = random(matrix.getScreenHeight());
+ #endif
+        // x2,y2 pair is on screen;
+        x2 = random(matrix.getScreenWidth());
+        y2 = random(matrix.getScreenHeight());
+
+        // radius is positive, up to screen width size
+        radius = random(matrix.getScreenWidth());
+        radius2 = random(matrix.getScreenWidth());
+
+        rgb24 fillColor = {(uint8_t)random(192), (uint8_t)random(192), (uint8_t)random(192)};
+        rgb24 outlineColor = {(uint8_t)random(192), (uint8_t)random(192), (uint8_t)random(192)};
+
+        switch (random(15)) {
+        case 0:
+            backgroundLayer.drawPixel(x0, y0, outlineColor);
+            break;
+
+        case 1:
+            backgroundLayer.drawLine(x0, y0, x1, y1, outlineColor);
+            break;
+
+        case 2:
+            backgroundLayer.drawCircle(x0, y0, radius, outlineColor);
+            break;
+
+        case 3:
+            backgroundLayer.drawTriangle(x0, y0, x1, y1, x2, y2, outlineColor);
+            break;
+
+        case 4:
+            backgroundLayer.drawRectangle(x0, y0, x1, y1, outlineColor);
+            break;
+
+        case 5:
+            backgroundLayer.drawRoundRectangle(x0, y0, x1, y1, radius, outlineColor);
+            break;
+
+        case 6:
+            backgroundLayer.fillCircle(x0, y0, radius, fillColor);
+            break;
+
+        case 7:
+            backgroundLayer.fillTriangle(x0, y0, x1, y1, x2, y2, fillColor);
+            break;
+
+        case 8:
+            backgroundLayer.fillRectangle(x0, y0, x1, y1, fillColor);
+            break;
+
+        case 9:
+            backgroundLayer.fillRoundRectangle(x0, y0, x1, y1, radius, fillColor);
+            break;
+
+        case 10:
+            backgroundLayer.fillCircle(x0, y0, radius, outlineColor, fillColor);
+            break;
+
+        case 11:
+            backgroundLayer.fillTriangle(x0, y0, x1, y1, x2, y2, outlineColor, fillColor);
+            break;
+
+        case 12:
+            backgroundLayer.fillRectangle(x0, y0, x1, y1, outlineColor, fillColor);
+            break;
+
+        case 13:
+            backgroundLayer.fillRoundRectangle(x0, y0, x1, y1, radius, outlineColor, fillColor);
+            break;
+
+        case 14:
+            backgroundLayer.drawEllipse(x0, y0, radius, radius2, outlineColor);
+
+        default:
+            break;
+        }
+        backgroundLayer.swapBuffers();
+        //backgroundLayer.fillScreen({0,0,0});
+        while (millis() < currentMillis + delayBetweenShapes);
+    }
 }
