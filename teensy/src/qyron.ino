@@ -105,6 +105,9 @@ const rgb24 blackColor = {0, 0, 0};
 const rgb24 redColor = {0x40, 0, 0};
 const rgb24 defaultBackgroundColor = redColor;
 
+bool blinking = false;
+bool currentBG = false;
+
 void setup() {
   delay(1000);
   Serial.begin(9600);
@@ -133,6 +136,7 @@ void loop() {
     pack(&scrollingLayer3, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayer3_start: display text on layer 3. @a: char* @return: none",
     pack(&scrollingLayer4, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayer4_start: display text on layer 4. @a: char* @return: none",
     pack(&scrollingLayer5, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayer5_start: display text on layer 5. @a: char* @return: none",
+    pack(&scrollingLayerF, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayerF_start: display text on layer F. @a: char* @return: none",
 
     //speed
     pack(&scrollingLayer1, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer1_speed: change speed on layer 1. @a: unsigned char @return: none",
@@ -140,14 +144,27 @@ void loop() {
     pack(&scrollingLayer3, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer3_speed: change speed on layer 3. @a: unsigned char @return: none",
     pack(&scrollingLayer4, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer4_speed: change speed on layer 4. @a: unsigned char @return: none",
     pack(&scrollingLayer5, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer5_speed: change speed on layer 5. @a: unsigned char @return: none",
+    pack(&scrollingLayerF, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayerF_speed: change speed on layer F. @a: unsigned char @return: none",
 
     //routines
     runFeatureDemo, "runFeatureDemo: runs the feature demo. @a: none @return: none.",
 
     //background
     setBlackBackground, "setBlackBackground: sets bg to black. @a: none @return: none.",
-    setRedBackground, "setRedBackground: sets bg to red. @a: none @return: none."
+    setRedBackground, "setRedBackground: sets bg to red. @a: none @return: none.",
+    toggleBlinking, "toggleBlinking: sets the background to flash black and red. @a: none @return: none."
   );
+
+  if(blinking == true) {
+    if(currentBG == true) {
+      setBlackBackground();
+      currentBG = false;
+    } else {
+      setRedBackground();
+      currentBG = true;
+    }
+    delay(200);
+  }
 }
 
 
@@ -216,6 +233,16 @@ void setRedBackground() {
   backgroundLayer.fillScreen(redColor);
   backgroundLayer.swapBuffers();
 }
+
+void toggleBlinking() {
+  if(blinking == true) {
+    blinking = false;
+  } else {
+    blinking = true;
+  }
+}
+
+
 
 
 //from FeatureDemo.ino

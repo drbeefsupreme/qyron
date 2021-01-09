@@ -10,13 +10,15 @@ layerStart = {1: interface.scrollingLayer1_start,
               2: interface.scrollingLayer2_start,
               3: interface.scrollingLayer3_start,
               4: interface.scrollingLayer4_start,
-              5: interface.scrollingLayer5_start}
+              5: interface.scrollingLayer5_start,
+              6: interface.scrollingLayerF_start}
 
 layerSpeed = {1: interface.scrollingLayer1_speed,
               2: interface.scrollingLayer2_speed,
               3: interface.scrollingLayer3_speed,
               4: interface.scrollingLayer4_speed,
-              5: interface.scrollingLayer5_speed}
+              5: interface.scrollingLayer5_speed,
+              6: interface.scrollingLayerF_speed}
 
 class LayerForm(FlaskForm):
     layerText = StringField('text')
@@ -61,6 +63,7 @@ class BigDumbForm(FlaskForm):
 
     setRedBG = SubmitField('red bg')
     setBlackBG = SubmitField('black bg')
+    setBlinking = SubmitField('flashing')
 
     submit = SubmitField('submit')
     clear = SubmitField('clear')
@@ -101,8 +104,8 @@ def index():
 @app.route('/dumb', methods=['GET', 'POST'])
 def dumb():
     form = BigDumbForm()
-    currentText = ["" for i in range(5)]
-    currentSpeed = ["" for i in range(5)]
+    currentText = ["" for i in range(6)]
+    currentSpeed = ["" for i in range(6)]
     if form.validate_on_submit():
         if form.submit.data:
             currentText[0] = str(form.layerText1.data)
@@ -149,7 +152,7 @@ def dumb():
             currentSpeed[3] = "15"
             currentSpeed[4] = "150"
         if form.clear.data:
-            for i in range(5):
+            for i in range(6):
                 currentText[i] = " "
         if form.featureDemo.data:
             interface.runFeatureDemo()
@@ -157,7 +160,10 @@ def dumb():
             interface.setBlackBackground()
         if form.setRedBG.data:
             interface.setRedBackground()
-    for i in range(5):
+        if form.setBlinking.data:
+            interface.toggleBlinking()
+
+    for i in range(6):
         if currentText[i] is not None and currentText[i] is not "":
             layerStart[i+1](currentText[i].encode('utf-8'), -1)
         if currentSpeed[i] is not None and currentSpeed[i] is not "":
