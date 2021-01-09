@@ -23,6 +23,21 @@ class LayerForm(FlaskForm):
     layerSpeed = StringField('speed')
     submit = SubmitField('submit')
 
+#dynamic form for layers
+def DLayerForm(arg):
+    class TempForm(FlaskForm):
+        text = StringField()
+        speed = StringField()
+        submit = SubmitField()
+    setattr(TempForm, 'text', StringField(arg))
+    setattr(TempForm, 'speed', StringField(arg))
+    setattr(TempForm, 'submit', SubmitField(arg))
+    return TempForm
+
+arg_list = ['one', 'two', 'three', 'four', 'five']
+form_list = [DLayerForm(arg=arg_list[i]) for i in range(5)]
+
+
 @app.route("/alllayers", methods=["GET", "POST"])
 def allLayers():
     errors = ""
@@ -40,15 +55,16 @@ def allLayers():
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    form = LayerForm()
+    form = [LayerForm() for i in range(5)]
     currentText = ["" for i in range(5)]
     currentSpeed = ["" for i in range(5)]
-    if form.validate_on_submit():
-        flash('Parameters submitted - text={}, speed={}'.format(form.layerText.data, form.layerSpeed.data))
-        currentText[0] = str(form.layerText.data)
-        currentSpeed[0] = str(form.layerSpeed.data)
-    if currentText[0] is not None and currentText[0] is not "":
-        layerStart[1](currentText[0].encode('utf-8'), -1)
+    if form[i].validate_on_submit():
+        flash('Parameters submitted - text={}, speed={}'.format(form[i].layerText.data, form[i].layerSpeed.data))
+        currentText[i] = str(form[i].layerText.data)
+        currentSpeed[i] = str(form[i].layerSpeed.data)
+    for i in range(5):
+        if currentText[i] is not None and currentText[i] is not "":
+            layerStart[i+1](currentText[i].encode('utf-8'), -1)
     return render_template('layerform.html', title='Layers', form=form)
 
 
