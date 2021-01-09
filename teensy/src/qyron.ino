@@ -149,6 +149,7 @@ void loop() {
     //routines
     runFeatureDemo, "runFeatureDemo: runs the feature demo. @a: none @return: none.",
     drawRandomShapes, "drawRandomShapes: draws random shapes. @a: none @return: none.",
+    drawRandomPixels, "drawRandomPixels: draws random pixels. @a: none @return: none.",
 
     //background
     setBlackBackground, "setBlackBackground: sets bg to black. @a: none @return: none.",
@@ -372,5 +373,43 @@ void drawRandomShapes() {
         backgroundLayer.swapBuffers();
         //backgroundLayer.fillScreen({0,0,0});
         while (millis() < currentMillis + delayBetweenShapes);
+    }
+}
+
+void drawRandomPixels() {
+    int i, j;
+    unsigned long currentMillis;
+
+    const uint transitionTime = 3000;
+
+    backgroundLayer.fillScreen({0, 0, 0});
+    backgroundLayer.swapBuffers();
+
+    currentMillis = millis();
+
+    while (millis() - currentMillis < transitionTime) {
+        int x0, y0;
+
+        rgb24 color;
+        float fraction = ((float)millis() - currentMillis) / ((float)transitionTime / 2);
+
+        if (millis() - currentMillis < transitionTime / 2) {
+            color.red = 255 - 255.0 * fraction;
+            color.green = 255.0 * fraction;
+            color.blue = 0;
+        }
+        else {
+            color.red = 0;
+            color.green = 255 - 255.0 / 2 * (fraction - 1.0);
+            color.blue = 255.0 * (fraction - 1.0);
+        }
+
+        for (i = 0; i < 20; i++) {
+            x0 = random(matrix.getScreenWidth());
+            y0 = random(matrix.getScreenHeight());
+
+            backgroundLayer.drawPixel(x0, y0, color);
+        }
+        backgroundLayer.swapBuffers();
     }
 }

@@ -61,6 +61,7 @@ class BigDumbForm(FlaskForm):
 
     featureDemo = SubmitField('demo')
     randomShapes = SubmitField('randomShapes')
+    randomPixels = SubmitField('randomPixels')
 
     setRedBG = SubmitField('red bg')
     setBlackBG = SubmitField('black bg')
@@ -159,6 +160,8 @@ def dumb():
             interface.runFeatureDemo()
         if form.randomShapes.data:
             interface.drawRandomShapes()
+        if form.randomPixels.data:
+            interface.drawRandomPixels()
         if form.setBlackBG.data:
             interface.setBlackBackground()
         if form.setRedBG.data:
