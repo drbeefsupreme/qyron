@@ -59,6 +59,9 @@ class BigDumbForm(FlaskForm):
 
     featureDemo = SubmitField('demo')
 
+    setRedBG = SubmitField('red bg')
+    setBlackBG = SubmitField('black bg')
+
     submit = SubmitField('submit')
     clear = SubmitField('clear')
 
@@ -150,6 +153,10 @@ def dumb():
                 currentText[i] = " "
         if form.featureDemo.data:
             interface.runFeatureDemo()
+        if form.setBlackBG.data:
+            interface.setBlackBackground()
+        if form.setRedBG.data:
+            interface.setRedBackground()
     for i in range(5):
         if currentText[i] is not None and currentText[i] is not "":
             layerStart[i+1](currentText[i].encode('utf-8'), -1)

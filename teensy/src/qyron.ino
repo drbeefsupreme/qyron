@@ -101,7 +101,9 @@ StreamIO io;
 // constants
 const int defaultBrightness = (100*255)/100;
 const int defaultScrollOffset = 6; //not sure if i use this
-const rgb24 defaultBackgroundColor = {0x40, 0, 0};
+const rgb24 blackColor = {0, 0, 0};
+const rgb24 redColor = {0x40, 0, 0};
+const rgb24 defaultBackgroundColor = redColor;
 
 void setup() {
   delay(1000);
@@ -140,10 +142,11 @@ void loop() {
     pack(&scrollingLayer5, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer5_speed: change speed on layer 5. @a: unsigned char @return: none",
 
     //routines
-    runFeatureDemo, "runFeatureDemo: runs the feature demo. @a: none @return: none."
+    runFeatureDemo, "runFeatureDemo: runs the feature demo. @a: none @return: none.",
 
-
-
+    //background
+    setBlackBackground, "setBlackBackground: sets bg to black. @a: none @return: none.",
+    setRedBackground, "setRedBackground: sets bg to red. @a: none @return: none."
   );
 }
 
@@ -203,6 +206,16 @@ void matrixSetup() {
 
 }
 
+
+void setBlackBackground() {
+  backgroundLayer.fillScreen(blackColor);
+  backgroundLayer.swapBuffers();
+}
+
+void setRedBackground() {
+  backgroundLayer.fillScreen(redColor);
+  backgroundLayer.swapBuffers();
+}
 
 
 //from FeatureDemo.ino
