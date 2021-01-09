@@ -1,5 +1,5 @@
 from __main__ import app, interface
-from flask import request, render_template
+from flask import request, render_template, flash
 
 #form magic
 from flask_wtf import FlaskForm
@@ -38,9 +38,17 @@ def allLayers():
 
     return render_template('alllayers.html', errors=errors)
 
-@app.route("/", methods=["GET", "POST"])
+@app.route('/', methods=['GET', 'POST'])
 def index():
     form = LayerForm()
+    currentText = ["" for i in range(5)]
+    currentSpeed = ["" for i in range(5)]
+    if form.validate_on_submit():
+        flash('Parameters submitted - text={}, speed={}'.format(form.layerText.data, form.layerSpeed.data))
+        currentText[0] = str(form.layerText.data)
+        currentSpeed[0] = str(form.layerSpeed.data)
+    if currentText[0] is not None and currentText[0] is not "":
+        layerStart[1](currentText[0].encode('utf-8'), -1)
     return render_template('layerform.html', title='Layers', form=form)
 
 

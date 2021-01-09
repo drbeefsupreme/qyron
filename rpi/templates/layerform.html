@@ -4,6 +4,7 @@
 {{ errors }}
     <h1>Layer {{ num }} parameters</p>
     <form method="post" action="">
+        {{ form.hidden_tag() }}
         <p>
             {{ form.layerText.label }} <br>
             {{ form.layerText(size=32)  }}
