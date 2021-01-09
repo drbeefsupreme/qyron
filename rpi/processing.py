@@ -133,8 +133,8 @@ def dumb():
             currentSpeed[3] = "100"
             currentSpeed[4] = "120"
         if form.legallyActionable.data:
-            currentText[0] = "!!! NOT LEGALLY ACTIONABLE !!! NOT LEGALLY ACTIONABLE !!!"
-            currentText[1] = "IN MINECRAFT, FAKE, PARODY, NOT LEGALLY ACTIONABLE"
+            currentText[0] = "!!! NOT LEGALLY ACTIONABLE !!! NOT LEGALLY ACTIONABLE !!! NOT LEGALLY ACTIONABLE !!! NOT LEGALLY ACTIONABLE  !!!"
+            currentText[1] = "IN MINECRAFT, FAKE, PARODY, FAKE, IN MINECRAFT, IN MINECRAFT, IN MINECRAFT"
             currentText[2] = "IN THE MATRIX"
             currentText[3] = "PARODY"
             currentText[4] = "PARODY"
