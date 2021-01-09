@@ -1,41 +1,42 @@
 from __main__ import app, interface
-from flask import request
+from flask import request, render_template
 
-layerStart = {0: interface.scrollingLayer1_start,
-              1: interface.scrollingLayer2_start,
-              2: interface.scrollingLayer3_start,
-              3: interface.scrollingLayer4_start,
-              4: interface.scrollingLayer5_start}
+#form magic
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
 
+layerStart = {1: interface.scrollingLayer1_start,
+              2: interface.scrollingLayer2_start,
+              3: interface.scrollingLayer3_start,
+              4: interface.scrollingLayer4_start,
+              5: interface.scrollingLayer5_start}
 
-@app.route("/", methods=["GET", "POST"])
+layerSpeed = {1: interface.scrollingLayer1_speed,
+              2: interface.scrollingLayer2_speed,
+              3: interface.scrollingLayer3_speed,
+              4: interface.scrollingLayer4_speed,
+              5: interface.scrollingLayer5_speed}
+
+class LayerForm(FlaskForm):
+    layerText = StringField('Text')
+    layerSpeed = StringField('Speed')
+    submit = ('submit')
+
+@app.route("/alllayers", methods=["GET", "POST"])
 def index():
     errors = ""
     layerText = ["" for i in range(5)]
     if request.method == "POST":
         for i in range(5):
             try:
-                layerText[i] = str(request.form["layer"+str(i)])
+                layerText[i] = str(request.form["layer"+str(i+1)])
             except:
-                errors += "<p>{!r} is not a string.</p>\n".format(request.form["layer"+str(i)])
+                errors += "<p>{!r} is not a string.</p>\n".format(request.form["layer"+str(i+1)])
             if layerText[i] is not None and layerText[i] is not "":
-                layerStart[i](layerText[i].encode('utf-8'), -1)
-    return '''
-        <html>
-            <body>
-                {errors}
-                <p>Enter your layers:</p>
-                <form method="post" action=".">
-                    <p><input name="layer0" /></p>
-                    <p><input name="layer1" /></p>
-                    <p><input name="layer2" /></p>
-                    <p><input name="layer3" /></p>
-                    <p><input name="layer4" /></p>
-                    <p><input type="submit" value="Set layers" /></p>
-                </form>
-            </body>
-        </html>
-    '''.format(errors=errors)
+                layerStart[i+1](layerText[i].encode('utf-8'), -1)
+
+    return render_template('alllayers.html', errors=errors)
 
 
 @app.route("/layer1")

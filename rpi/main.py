@@ -28,11 +28,6 @@ if __name__ == '__main__':
 
     print("connection successful")
 
-    layerStart = {1: interface.scrollingLayer1_start,
-                  2: interface.scrollingLayer2_start,
-                  3: interface.scrollingLayer3_start,
-                  4: interface.scrollingLayer4_start,
-                  5: interface.scrollingLayer5_start}
 
     time.sleep(1)
 

@@ -1,0 +1,14 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - Quantum Metachyron</title>
+        {% else %}
+        <title>Welcome to Crow Net</title>
+        {% endif %}
+    </head>
+    <body>
+      <div>Too Late Show <a href="/index">Home</a></div>
+      <hr>
+      {% block content %}{% endblock %}
+    </body>
+</html>

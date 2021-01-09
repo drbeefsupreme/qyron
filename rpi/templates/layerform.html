@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+{{ errors }}
+    <h1>Layer {{ num }} parameters</p>
+    <form method="post" action=".">
+        <p><input name="text" /></p>
+        <p><input name="speed" /></p>
+        <p><input type="submit" value="Set layers" /></p>
+    </form>
+{% endblock %}
