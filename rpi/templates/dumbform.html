@@ -45,7 +45,8 @@
             {{ form.layerSpeed5.label  }} <br>
             {{ form.layerSpeed5(size=32) }}
         </p>
-        <p>{{ form.submit() }}</p>
-        <p>{{ form.abortBit()  }}</p>
+        <p>{{ form.submit() }} {{ form.clear() }}</p>
+        <p>{{ form.abortBit() }} {{ form.parody() }}</p>
+        <p>{{ form.legallyActionable() }}
     </form>
 {% endblock %}

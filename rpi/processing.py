@@ -54,8 +54,11 @@ class BigDumbForm(FlaskForm):
     layerSpeed5 = StringField('layer 5 speed')
 
     abortBit = SubmitField('ABORT BIT')
+    legallyActionable = SubmitField('Not Legally Actionable')
+    parody = SubmitField('PARODY')
 
     submit = SubmitField('submit')
+    clear = SubmitField('clear')
 
 
 
@@ -118,6 +121,31 @@ def dumb():
             currentSpeed[2] = "25"
             currentSpeed[3] = "90"
             currentSpeed[4] = "10"
+        if form.parody.data:
+            currentText[0] = "PARODY PARODY PARODY PARODY PARODY"
+            currentText[1] = "IN MINECRAFT IN MINECRAFT IN MINECRAFT"
+            currentText[2] = "PARODY ALERT PARODY ALERT"
+            currentText[3] = "PARODY"
+            currentText[4] = "MINECRAFT"
+            currentSpeed[0] = "75"
+            currentSpeed[1] = "160"
+            currentSpeed[2] = "50"
+            currentSpeed[3] = "100"
+            currentSpeed[4] = "120"
+        if form.legallyActionable.data:
+            currentText[0] = "!!! NOT LEGALLY ACTIONABLE !!! NOT LEGALLY ACTIONABLE !!!"
+            currentText[1] = "IN MINECRAFT, FAKE, PARODY, NOT LEGALLY ACTIONABLE"
+            currentText[2] = "IN THE MATRIX"
+            currentText[3] = "PARODY"
+            currentText[4] = "PARODY"
+            currentSpeed[0] = "50"
+            currentSpeed[1] = "70"
+            currentSpeed[2] = "130"
+            currentSpeed[3] = "15"
+            currentSpeed[4] = "150"
+        if form.clear.data:
+            for i in range(5):
+                currentText[i] = " "
     for i in range(5):
         if currentText[i] is not None and currentText[i] is not "":
             layerStart[i+1](currentText[i].encode('utf-8'), -1)
