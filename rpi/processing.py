@@ -3,7 +3,7 @@ from flask import request, render_template, flash
 
 #form magic
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, FormField
 from wtforms.validators import DataRequired
 
 layerStart = {1: interface.scrollingLayer1_start,
@@ -28,13 +28,27 @@ def DLayerForm(arg):
     class TempForm(FlaskForm):
         text = StringField()
         speed = StringField()
-        submit = SubmitField()
     setattr(TempForm, 'layerText', StringField(arg))
     setattr(TempForm, 'layerSpeed', StringField(arg))
-    setattr(TempForm, 'submit', SubmitField(arg))
     return TempForm
 
+
 arg_list = ['one', 'two', 'three', 'four', 'five']
+
+# class BigForm(FlaskForm):
+#     def __init__(self):
+#         for i in range(5):
+#             self.FormField(DLayerForm(arg=arg_list[i]))
+
+
+class BigDumbForm(FlaskForm):
+    layer1 = FormField(DLayerForm(0))
+    layer2 = FormField(DLayerForm(1))
+    layer3 = FormField(DLayerForm(2))
+    layer4 = FormField(DLayerForm(3))
+    layer5 = FormField(DlayerForm(4))
+    submit = SubmitField('submit')
+
 
 
 @app.route("/alllayers", methods=["GET", "POST"])
@@ -63,6 +77,20 @@ def index():
             flash('Parameters submitted - text={}, speed={}'.format(forms[i].layerText.data, forms[i].layerSpeed.data))
             currentText[i] = str(forms[i].layerText.data)
             currentSpeed[i] = str(forms[i].layerSpeed.data)
+    for i in range(5):
+        if currentText[i] is not None and currentText[i] is not "":
+            layerStart[i+1](currentText[i].encode('utf-8'), -1)
+    return render_template('layerform.html', title='Layers', form=forms[0])
+
+@app.route('/dumb', methods=['GET', 'POST'])
+def index():
+    form = BigDumbForm()
+    currentText = ["" for i in range(5)]
+    currentSpeed = ["" for i in range(5)]
+    for i in range(5):
+        if form.validate_on_submit():
+            currentText[i] = str(forms.layerText.data)
+            currentSpeed[i] = str(forms.layerSpeed.data)
     for i in range(5):
         if currentText[i] is not None and currentText[i] is not "":
             layerStart[i+1](currentText[i].encode('utf-8'), -1)
