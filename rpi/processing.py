@@ -53,6 +53,8 @@ class BigDumbForm(FlaskForm):
     layerSpeed4 = StringField('layer 4 speed')
     layerSpeed5 = StringField('layer 5 speed')
 
+    abortBit = SubmitField('ABORT BIT')
+
     submit = SubmitField('submit')
 
 
@@ -92,18 +94,30 @@ def index():
 def dumb():
     form = BigDumbForm()
     currentText = ["" for i in range(5)]
-    currentSpeed = [50 for i in range(5)]
+    currentSpeed = ["" for i in range(5)]
     if form.validate_on_submit():
-        currentText[0] = str(form.layerText1.data)
-        currentText[1] = str(form.layerText2.data)
-        currentText[2] = str(form.layerText3.data)
-        currentText[3] = str(form.layerText4.data)
-        currentText[4] = str(form.layerText5.data)
-        currentSpeed[0] = str(form.layerSpeed1.data)
-        currentSpeed[1] = str(form.layerSpeed2.data)
-        currentSpeed[2] = str(form.layerSpeed3.data)
-        currentSpeed[3] = str(form.layerSpeed4.data)
-        currentSpeed[4] = str(form.layerSpeed5.data)
+        if form.submit.data:
+            currentText[0] = str(form.layerText1.data)
+            currentText[1] = str(form.layerText2.data)
+            currentText[2] = str(form.layerText3.data)
+            currentText[3] = str(form.layerText4.data)
+            currentText[4] = str(form.layerText5.data)
+            currentSpeed[0] = str(form.layerSpeed1.data)
+            currentSpeed[1] = str(form.layerSpeed2.data)
+            currentSpeed[2] = str(form.layerSpeed3.data)
+            currentSpeed[3] = str(form.layerSpeed4.data)
+            currentSpeed[4] = str(form.layerSpeed5.data)
+        if form.abortBit.data:
+            currentText[0] = "ABORT BIT ABORT BIT ABORT BIT ABORT BIT"
+            currentText[1] = "ABORT BIT ABORT BIT ABORT BIT ABORT BIT"
+            currentText[2] = "ABORT BIT"
+            currentText[3] = "ABORT BIT"
+            currentText[4] = "ABORT BIT"
+            currentSpeed[0] = "60"
+            currentSpeed[1] = "150"
+            currentSpeed[2] = "25"
+            currentSpeed[3] = "90"
+            currentSpeed[4] = "10"
     for i in range(5):
         if currentText[i] is not None and currentText[i] is not "":
             layerStart[i+1](currentText[i].encode('utf-8'), -1)
