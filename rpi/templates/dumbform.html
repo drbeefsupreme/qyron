@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Layer {1 parameters</p>
+    <form method="post" action="">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.layerText1.label }} <br>
+            {{ form.layerText1(size=32)  }}
+        </p>
+        <p>
+            {{ form.layerSpeed1.label  }} <br>
+            {{ form.layerSpeed1(size=32) }}
+        </p>
+
+    <form method="post" action="">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.layerText2.label }} <br>
+            {{ form.layerText2(size=32)  }}
+        </p>
+        <p>
+            {{ form.layerSpeed2.label  }} <br>
+            {{ form.layerSpeed2(size=32) }}
+        </p>
+
+    <form method="post" action="">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.layerText3.label }} <br>
+            {{ form.layerText3(size=32)  }}
+        </p>
+        <p>
+            {{ form.layerSpeed3.label  }} <br>
+            {{ form.layerSpeed3(size=32) }}
+        </p>
+
+            <form method="post" action="">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.layerText4.label }} <br>
+            {{ form.layerText4(size=32)  }}
+        </p>
+        <p>
+            {{ form.layerSpeed4.label  }} <br>
+            {{ form.layerSpeed4(size=32) }}
+        </p>
+
+    <form method="post" action="">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.layerText5.label }} <br>
+            {{ form.layerText5(size=32)  }}
+        </p>
+        <p>
+            {{ form.layerSpeed5.label  }} <br>
+            {{ form.layerSpeed5(size=32) }}
+        </p>
+
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}
