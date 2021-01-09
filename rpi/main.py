@@ -4,13 +4,15 @@
 from simple_rpc import Interface
 #web app library
 from flask import Flask, request
-import time
+import time, os
+from config import Config
 
 VERBOSE = True
 SERIAL_PORT = '/dev/ttyACM0'
 READ_TIMEOUT = 5
 
 app = Flask(__name__)
+app.config.from_object(Config)
 interface = Interface(SERIAL_PORT)
 import processing
 

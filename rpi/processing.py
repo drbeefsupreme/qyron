@@ -19,12 +19,12 @@ layerSpeed = {1: interface.scrollingLayer1_speed,
               5: interface.scrollingLayer5_speed}
 
 class LayerForm(FlaskForm):
-    layerText = StringField('Text')
-    layerSpeed = StringField('Speed')
-    submit = ('submit')
+    layerText = StringField('text')
+    layerSpeed = StringField('speed')
+    submit = SubmitField('submit')
 
 @app.route("/alllayers", methods=["GET", "POST"])
-def index():
+def allLayers():
     errors = ""
     layerText = ["" for i in range(5)]
     if request.method == "POST":
@@ -37,6 +37,11 @@ def index():
                 layerStart[i+1](layerText[i].encode('utf-8'), -1)
 
     return render_template('alllayers.html', errors=errors)
+
+@app.route("/", methods=["GET", "POST"])
+def index():
+    form = LayerForm()
+    return render_template('layerform.html', title='Layers', form=form)
 
 
 @app.route("/layer1")
