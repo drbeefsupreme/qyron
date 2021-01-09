@@ -57,6 +57,8 @@ class BigDumbForm(FlaskForm):
     legallyActionable = SubmitField('Not Legally Actionable')
     parody = SubmitField('PARODY')
 
+    featureDemo = SubmitField('demo')
+
     submit = SubmitField('submit')
     clear = SubmitField('clear')
 
@@ -146,6 +148,8 @@ def dumb():
         if form.clear.data:
             for i in range(5):
                 currentText[i] = " "
+        if form.featureDemo.data:
+            interface.runFeatureDemo()
     for i in range(5):
         if currentText[i] is not None and currentText[i] is not "":
             layerStart[i+1](currentText[i].encode('utf-8'), -1)

@@ -5,7 +5,11 @@ Too Late Show conspiracy board.
 
 #include <MatrixHardware_Teensy3_ShieldV4.h> //shield firmware
 #include <SmartMatrix.h> //HUB75 library
-#include <simpleRPC.h>
+#include <simpleRPC.h> //RPC library
+
+//local source
+#include "colorwheel.c" //for feature demo
+#include "gimpbitmap.h"
 
 /*  SmartMatrix initialization, with settings for the chyron */
 
@@ -36,8 +40,19 @@ SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer3, kMatrixWidth, kMatrixHeigh
 SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer4, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
 SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayer5, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
 
+
 //Creates SMLayerIndexed
 SMARTMATRIX_ALLOCATE_INDEXED_LAYER(indexedLayer, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kIndexedLayerOptions);
+
+
+//Feature demo layers
+#ifdef USE_ADAFRUIT_GFX_LAYERS
+  // there's not enough allocated memory to hold the long strings used by this sketch by default, this increases the memory, but it may not be large enough
+  SMARTMATRIX_ALLOCATE_GFX_MONO_LAYER(scrollingLayerF, kMatrixWidth, kMatrixHeight, 6*1024, 1, COLOR_DEPTH, kScrollingLayerOptions);
+#else
+  SMARTMATRIX_ALLOCATE_SCROLLING_LAYER(scrollingLayerF, kMatrixWidth, kMatrixHeight, COLOR_DEPTH, kScrollingLayerOptions);
+#endif
+
 
 // Ports
 #define SERIAL Serial //Serial port for communication
@@ -85,19 +100,18 @@ StreamIO io;
 
 // constants
 const int defaultBrightness = (100*255)/100;
+const int defaultScrollOffset = 6; //not sure if i use this
 const rgb24 defaultBackgroundColor = {0x40, 0, 0};
 
 void setup() {
   delay(1000);
-  //SERIAL.begin(115200);
   Serial.begin(9600);
 
   delay(250);
   debug("Setup() starting");
-  demoSetup();  //initializes the matrix and demo layers
+  matrixSetup();  //initializes the matrix and demo layers
   io.begin(Serial); //passes the serial connection to the RPC lib
 
-  //streamingMode.setParser(&smParser);
 
 
   delay(3000);
@@ -123,7 +137,10 @@ void loop() {
     pack(&scrollingLayer2, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer2_speed: change speed on layer 2. @a: unsigned char @return: none",
     pack(&scrollingLayer3, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer3_speed: change speed on layer 3. @a: unsigned char @return: none",
     pack(&scrollingLayer4, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer4_speed: change speed on layer 4. @a: unsigned char @return: none",
-    pack(&scrollingLayer5, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer5_speed: change speed on layer 5. @a: unsigned char @return: none"
+    pack(&scrollingLayer5, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer5_speed: change speed on layer 5. @a: unsigned char @return: none",
+
+    //routines
+    runFeatureDemo, "runFeatureDemo: runs the feature demo. @a: none @return: none."
 
 
 
@@ -131,13 +148,16 @@ void loop() {
 }
 
 
-void demoSetup() {
+void matrixSetup() {
   matrix.addLayer(&backgroundLayer);
   matrix.addLayer(&scrollingLayer1);
   matrix.addLayer(&scrollingLayer2);
   matrix.addLayer(&scrollingLayer3);
   matrix.addLayer(&scrollingLayer4);
   matrix.addLayer(&scrollingLayer5);
+
+  //features demo layers
+  matrix.addLayer(&scrollingLayerF);
   matrix.addLayer(&indexedLayer);
 
 
@@ -180,5 +200,59 @@ void demoSetup() {
   matrix.setBrightness(defaultBrightness);
 
   backgroundLayer.enableColorCorrection(true); //wat this?
+
+}
+
+
+
+//from FeatureDemo.ino
+void drawBitmap(int16_t x, int16_t y, const gimp32x32bitmap* bitmap) {
+  for(unsigned int i=0; i < bitmap->height; i++) {
+    for(unsigned int j=0; j < bitmap->width; j++) {
+      rgb24 pixel = { bitmap->pixel_data[(i*bitmap->width + j)*3 + 0],
+                      bitmap->pixel_data[(i*bitmap->width + j)*3 + 1],
+                      bitmap->pixel_data[(i*bitmap->width + j)*3 + 2] };
+
+      backgroundLayer.drawPixel(x + j, y + i, pixel);
+    }
+  }
+}
+
+#define DEMO_INTRO              1
+#define DEMO_DRAWING_INTRO      1
+#define DEMO_DRAWING_PIXELS     1
+#define DEMO_DRAWING_LINES      1
+#define DEMO_DRAWING_TRIANGLES  1
+#define DEMO_DRAWING_CIRCLES    1
+#define DEMO_DRAWING_RECTANGLES 1
+#define DEMO_DRAWING_ROUNDRECT  1
+#define DEMO_DRAWING_FILLED     1
+#define DEMO_FILL_SCREEN        1
+#define DEMO_DRAW_CHARACTERS    1
+#define DEMO_FONT_OPTIONS       1
+#define DEMO_MONO_BITMAP        1
+#define DEMO_SCROLL_COLOR       1
+#define DEMO_SCROLL_MODES       1
+#define DEMO_SCROLL_SPEED       1
+#define DEMO_SCROLL_FONTS       1
+#define DEMO_SCROLL_POSITION    1
+#define DEMO_SCROLL_ROTATION    1
+#define DEMO_BRIGHTNESS         1
+#define DEMO_RAW_BITMAP         1
+#define DEMO_COLOR_CORRECTION   1
+#define DEMO_BACKGND_BRIGHTNESS 1
+#define DEMO_INDEXED_LAYER      1
+#define DEMO_REFRESH_RATE       1
+#define DEMO_READ_PIXEL         1
+
+void runFeatureDemo() {
+    backgroundLayer.fillScreen(defaultBackgroundColor);
+    backgroundLayer.swapBuffers();
+
+    scrollingLayerF.setColor({0xff, 0xff, 0xff});
+    scrollingLayerF.setMode(wrapForward);
+    scrollingLayerF.setSpeed(40);
+    scrollingLayerF.setFont(font6x10);
+    scrollingLayerF.start("SmartMatrix Demo", 1);
 
 }
