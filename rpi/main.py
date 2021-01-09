@@ -2,12 +2,28 @@
 
 #RPC library
 from simple_rpc import Interface
+#web app library
+from flask import Flask
 import time
 
 
 VERBOSE = True
 SERIAL_PORT = '/dev/ttyACM0'
 READ_TIMEOUT = 5
+
+app = Flask(__name__)
+
+@app.route("/")
+def index():
+    return "she a go"
+
+@app.route("/layer1")
+def layer1text():
+    interface.scrollingLayer1_start(b'Layer 1 test', -1)
+
+@app.route("/layer2")
+def layer2text():
+    interface.scrollingLayer2_start(b'layer 2 test', -1)
 
 if __name__ == '__main__':
     options = {
@@ -24,10 +40,6 @@ if __name__ == '__main__':
 
     print("connection successful")
 
-    time.sleep(3)
+    time.sleep(1)
 
-    interface.scrollingLayer1_start(b'test', -1)
-    time.sleep(1)
-    interface.scrollingLayer2_start(b'bweh skrrters', -1)
-    time.sleep(1)
-    interface.scrollingLayer1_speed(10)
+    app.run(host='0.0.0.0', port=80, debug=True)
