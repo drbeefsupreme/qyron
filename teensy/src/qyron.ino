@@ -380,7 +380,7 @@ void drawRandomPixels() {
     int i, j;
     unsigned long currentMillis;
 
-    const uint transitionTime = 3000;
+    const uint transitionTime = 15000;
 
     backgroundLayer.fillScreen({0, 0, 0});
     backgroundLayer.swapBuffers();
