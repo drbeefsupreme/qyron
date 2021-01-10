@@ -6,6 +6,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, FormField
 from wtforms.validators import DataRequired
 
+import cryptocompare
+
 layerStart = {1: interface.scrollingLayer1_start,
               2: interface.scrollingLayer2_start,
               3: interface.scrollingLayer3_start,
@@ -62,6 +64,7 @@ class BigDumbForm(FlaskForm):
     featureDemo = SubmitField('demo')
     randomShapes = SubmitField('randomShapes')
     randomPixels = SubmitField('randomPixels')
+    cryptoPrices = SubmitField('cryptoPrices')
 
     setRedBG = SubmitField('red bg')
     setBlackBG = SubmitField('black bg')
@@ -162,6 +165,16 @@ def dumb():
             interface.drawRandomShapes()
         if form.randomPixels.data:
             interface.drawRandomPixels()
+        if form.cryptoPrices.data:
+            prices = cryptocompare.get_price(['BTC','ETH', 'XMR', 'DOGE', 'HOT'],curr='USD')
+            priceString = "UP TO THE MINUTE CRYPTOCURRENCY PRICES. BROUGHT TO YOU BY CROWCOIN, THE OFFICIAL SHITCOIN OF THE TOO LATE SHOW"
+            priceString = priceString + "   BTC: $" + str(prices["BTC"]["USD"])
+            priceString = priceString + "   ETH: $" + str(prices["ETH"]["USD"])
+            priceString = priceString + "   XMR: $" + str(prices["XMR"]["USD"])
+            priceString = priceString + "   DOGE: $" + str(prices["DOGE"]["USD"])
+            priceString = priceString + "   HOT: $" + str(prices["HOT"]["USD"])
+            priceString = priceString + "   URBIT PLANET: $35.52     URBIT STAR: $4653.51"
+            currentText[0] = priceString
         if form.setBlackBG.data:
             interface.setBlackBackground()
         if form.setRedBG.data:

@@ -9,6 +9,7 @@ verify_ssl = true
 arduino-simple-rpc = "*"
 flask = "*"
 flask-wtf = "*"
+cryptocompare = "*"
 
 [requires]
 python_version = "3.7"
