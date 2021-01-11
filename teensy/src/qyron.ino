@@ -99,7 +99,7 @@ int freeRam()
 StreamIO io;
 
 // constants
-const int defaultBrightness = (100*255)/100;
+const int defaultBrightness = (18*255)/100;
 const int defaultScrollOffset = 6; //not sure if i use this
 const rgb24 blackColor = {0, 0, 0};
 const rgb24 redColor = {0x40, 0, 0};
@@ -145,6 +145,8 @@ void loop() {
     pack(&scrollingLayer4, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer4_speed: change speed on layer 4. @a: unsigned char @return: none",
     pack(&scrollingLayer5, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer5_speed: change speed on layer 5. @a: unsigned char @return: none",
     pack(&scrollingLayerF, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayerF_speed: change speed on layer F. @a: unsigned char @return: none",
+
+    setBrightness, "setBrightness: sets brightness. @a: int @return: none.",
 
     //routines
     runFeatureDemo, "runFeatureDemo: runs the feature demo. @a: none @return: none.",
@@ -244,7 +246,9 @@ void toggleBlinking() {
   }
 }
 
-
+void setBrightness(int brightness) {
+  matrix.setBrightness(brightness);
+}
 
 
 //from FeatureDemo.ino

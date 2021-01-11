@@ -56,6 +56,7 @@ class BigDumbForm(FlaskForm):
     layerSpeed3 = StringField('layer 3 speed')
     layerSpeed4 = StringField('layer 4 speed')
     layerSpeed5 = StringField('layer 5 speed')
+    brightness = StringField('brightness')
 
     abortBit = SubmitField('ABORT BIT')
     legallyActionable = SubmitField('Not Legally Actionable')
@@ -69,6 +70,8 @@ class BigDumbForm(FlaskForm):
     setRedBG = SubmitField('red bg')
     setBlackBG = SubmitField('black bg')
     setBlinking = SubmitField('flashing')
+
+    welcomeVinay = SubmitField('vinay')
 
     submit = SubmitField('submit')
     clear = SubmitField('clear')
@@ -161,6 +164,17 @@ def dumb():
                 currentText[i] = " "
         if form.featureDemo.data:
             interface.runFeatureDemo()
+        if form.welcomeVinay.data:
+            currentText[0] = "WELCOME SWAMI HAVABANANA DARK LORD OF THE SITH VINAY GUPTA"
+            currentText[1] = "WANTED BY THE ASCENDED MASTERS TO ANSWER FOR CRIMES OF BEING TOO ADVANCED"
+            currentText[2] = "NOT SPONSORED BY BIG ACID: WHY?"
+            currentText[3] = "HEXAYURT"
+            currentText[4] = "ETHEREUM"
+            currentSpeed[0] = "50"
+            currentSpeed[1] = "70"
+            currentSpeed[2] = "130"
+            currentSpeed[3] = "15"
+            currentSpeed[4] = "150"
         if form.randomShapes.data:
             interface.drawRandomShapes()
         if form.randomPixels.data:
@@ -181,6 +195,9 @@ def dumb():
             interface.setRedBackground()
         if form.setBlinking.data:
             interface.toggleBlinking()
+        if form.brightness.data:
+            interface.setBrightness(int(form.brightness.data))
+
 
     for i in range(6):
         if currentText[i] is not None and currentText[i] is not "":
