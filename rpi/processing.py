@@ -71,7 +71,14 @@ class BigDumbForm(FlaskForm):
     setBlackBG = SubmitField('black bg')
     setBlinking = SubmitField('flashing')
 
+    fuckFBI = SubmitField('FBI')
+    fuckSEC = SubmitField('SEC')
+    fuckCIA = SubmitField('CIA')
+    fuckIRS = SubmitField('IRS')
+
+    tooLate = SubmitField('too late')
     welcomeVinay = SubmitField('vinay')
+    weed = SubmitField('weed')
 
     submit = SubmitField('submit')
     clear = SubmitField('clear')
@@ -137,6 +144,15 @@ def dumb():
             currentSpeed[2] = "25"
             currentSpeed[3] = "90"
             currentSpeed[4] = "10"
+        if form.tooLate.data:
+            currentText[0] = "THE TOO LATE SHOW WITH DR. BEELZEBUB CROW"
+            currentText[1] = "TAX SEASON AND CANNABIS SPECIAL"
+            currentText[2] = "PLEASE SEND US WEED"
+            currentSpeed[0] = "60"
+            currentSpeed[1] = "150"
+            currentSpeed[2] = "25"
+            currentSpeed[3] = "90"
+            currentSpeed[4] = "10"
         if form.parody.data:
             currentText[0] = "PARODY PARODY PARODY PARODY PARODY"
             currentText[1] = "IN MINECRAFT IN MINECRAFT IN MINECRAFT"
@@ -159,6 +175,21 @@ def dumb():
             currentSpeed[2] = "130"
             currentSpeed[3] = "15"
             currentSpeed[4] = "150"
+        if form.fuckFBI.data:
+            currentText[0] = "FREAKISH BEELZEBUB INCELS"
+            currentText[2] = "HALF OF US ARE FORMER FBI"
+        if form.fuckCIA.data:
+            currentText[0] = "CUCKED INCELS OF AMERICA"
+            currentText[1] = "WE ARE INNOCENT"
+            currentText[2] = "HALF OUR AUDIENCE ARE CURRENT OR FORMER CIA"
+        if form.fuckIRS.data:
+            currentText[1] = "IRRITATING REAL SHITHEADS"
+            currentText[0] = "WE PAID ALL OF OUR TAXES"
+            currentText[2] = "OUR RAINY DAY STASH OF DOGECOIN SAVED OUR ASSES"
+        if form.fuckSEC.data:
+            currentText[0] = "SEXLESS EXECUTIVE CLUB"
+            currentText[1] = "OUR CRYPTOCURRENCY IS NOT A SECURITY, NOR IT IS A PYRAMID SCHEME, BUT IT IS A MULTILEVEL MARKETING SCHEME"
+            currentText[2] = "BUY CROWCOIN TODAY"
         if form.clear.data:
             for i in range(6):
                 currentText[i] = " "
@@ -175,6 +206,17 @@ def dumb():
             currentSpeed[2] = "130"
             currentSpeed[3] = "15"
             currentSpeed[4] = "150"
+        if form.weed.data:
+            currentText[0] = "WEED WEED WEED WEED WEED WEED"
+            currentText[1] = "WEED WEED WEED WEED WEED WEED WEED WEED WEED WEED WEED WEED"
+            currentText[2] = "WEED WEED WEED WEED WEED WEED"
+            currentText[3] = "WEED WEED WEED WEED WEED WEED"
+            currentText[4] = "WEED WEED WEED WEED WEED WEED"
+            currentSpeed[0] = "150"
+            currentSpeed[1] = "170"
+            currentSpeed[2] = "190"
+            currentSpeed[3] = "5"
+            currentSpeed[4] = "10"
         if form.randomShapes.data:
             interface.drawRandomShapes()
         if form.randomPixels.data:
@@ -187,7 +229,7 @@ def dumb():
             priceString = priceString + "   XMR: $" + str(prices["XMR"]["USD"])
             priceString = priceString + "   DOGE: $" + str(prices["DOGE"]["USD"])
             priceString = priceString + "   HOT: $" + str(prices["HOT"]["USD"])
-            priceString = priceString + "   URBIT PLANET: $35.52     URBIT STAR: $4653.51"
+            priceString = priceString + "   URBIT PLANET: $58.92     URBIT STAR: $7,349.66"
             currentText[0] = priceString
         if form.setBlackBG.data:
             interface.setBlackBackground()

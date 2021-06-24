@@ -194,8 +194,8 @@ void matrixSetup() {
   scrollingLayer5.setMode(bounceForward);
 
   scrollingLayer1.setColor({0xff, 0xff, 0xff});
-  scrollingLayer2.setColor({0xff, 0x00, 0xff});
-  scrollingLayer3.setColor({0xff, 0xff, 0x00});
+  scrollingLayer2.setColor({0xff, 0xf7, 0x0e});
+  scrollingLayer3.setColor({0xc0, 0x23, 0x36});
   scrollingLayer4.setColor({0x00, 0x00, 0xff});
   scrollingLayer5.setColor({0xff, 0x00, 0x00});
 

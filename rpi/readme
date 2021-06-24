@@ -1,2 +1,2 @@
-pipenv shell
+sudo pipenv shell
 python3 main.py
