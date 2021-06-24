@@ -10,6 +10,8 @@ arduino-simple-rpc = "*"
 flask = "*"
 flask-wtf = "*"
 cryptocompare = "*"
+websocket-client = "*"
+pixelblaze-client = "*"
 
 [requires]
 python_version = "3.7"
