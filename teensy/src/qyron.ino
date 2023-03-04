@@ -55,7 +55,6 @@ SMARTMATRIX_ALLOCATE_INDEXED_LAYER(indexedLayer, kMatrixWidth, kMatrixHeight, CO
 
 
 // Ports
-#define SERIAL Serial //Serial port for communication
 #define SERIAL_DEBUG Serial //Serial port for debugging
 
 
@@ -94,10 +93,7 @@ int freeRam()
 //#include "SmartMatrixParser.h"
 //StreamingMode streamingMode;
 //SmartMatrixParser smParser(1024);
-
-//simpleRPC io
-StreamIO io;
-
+//
 // constants
 const int defaultBrightness = (18*255)/100;
 const int defaultScrollOffset = 6; //not sure if i use this
@@ -115,12 +111,17 @@ void setup() {
   delay(250);
   debug("Setup() starting");
   matrixSetup();  //initializes the matrix and demo layers
-  io.begin(Serial); //passes the serial connection to the RPC lib
 
 
 
   delay(3000);
   debug("entering loop...");
+}
+template <class... Args>
+Tuple<Args...> pack(Args... args) {
+  Tuple<Args...> t = {args...};
+
+  return t;
 }
 
 void loop() {
@@ -129,7 +130,7 @@ void loop() {
 
   //The following adds SmartMatrix functions to the interface to be passed over the wire to the controller
   interface(
-    io,
+    Serial,
     //start
     pack(&scrollingLayer1, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayer1_start: display text on layer 1. @a: char* @return: none",
     pack(&scrollingLayer2, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayer2_start: display text on layer 2. @a: char* @return: none",
@@ -138,7 +139,7 @@ void loop() {
     pack(&scrollingLayer5, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayer5_start: display text on layer 5. @a: char* @return: none",
     pack(&scrollingLayerF, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::start), "scrollingLayerF_start: display text on layer F. @a: char* @return: none",
 
-    //speed
+    /* //speed */
     pack(&scrollingLayer1, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer1_speed: change speed on layer 1. @a: unsigned char @return: none",
     pack(&scrollingLayer2, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer2_speed: change speed on layer 2. @a: unsigned char @return: none",
     pack(&scrollingLayer3, &SMLayerScrolling<RGB_TYPE(COLOR_DEPTH), kScrollingLayerOptions>::setSpeed), "scrollingLayer3_speed: change speed on layer 3. @a: unsigned char @return: none",
